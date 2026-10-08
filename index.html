@@ -20,44 +20,68 @@ body{font-family:'Montserrat',system-ui,sans-serif;background:
   radial-gradient(1200px 700px at 15% -10%,rgba(63,82,118,.35),transparent 60%),
   radial-gradient(900px 600px at 100% 0%,rgba(207,163,110,.10),transparent 55%),
   var(--navy-deep);
-  color:#e8e9f0;min-height:100vh;line-height:1.5;padding:34px 18px 70px;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1200px;margin:0 auto}
-/* logo */
-.logo{font-weight:800;letter-spacing:.02em;color:#fff;font-size:1.05rem;opacity:.95;margin-bottom:30px}
-.logo b{color:var(--gold)}
-/* header */
-.eyebrow{display:flex;align-items:center;gap:12px;font-size:.74rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-.eyebrow::before{content:"";width:42px;height:2px;background:var(--gold)}
-h1{font-size:3.1rem;font-weight:800;color:#fff;margin:14px 0 0;letter-spacing:-.02em;line-height:1.04}
+  color:#e8e9f0;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.shell{display:flex;min-height:100vh;max-width:1360px;margin:0 auto}
+/* sidebar */
+.side{width:252px;flex-shrink:0;padding:30px 20px;border-right:1px solid var(--card-bd);position:sticky;top:0;height:100vh;overflow-y:auto}
+.side .logo{font-weight:800;color:#fff;font-size:.98rem;margin-bottom:4px}
+.side .logo b{color:var(--gold)}
+.side .logo span{display:block;font-weight:500;opacity:.6;font-size:.72rem;margin-top:2px}
+.nav{margin-top:28px;display:flex;flex-direction:column;gap:4px}
+.nav .cat{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:14px 6px 6px}
+.nav a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 13px;border-radius:11px;font-size:.86rem;font-weight:600;color:#aab0cc;transition:.18s;cursor:pointer}
+.nav a:hover{background:rgba(255,255,255,.04);color:#fff}
+.nav a.on{background:var(--gold);color:var(--navy-deep)}
+.nav a .n{font-size:.72rem;font-weight:700;opacity:.75;font-variant-numeric:tabular-nums}
+.nav a.on .n{opacity:.85}
+.nav a .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* main */
+.main{flex:1;padding:34px 36px 70px;min-width:0}
+@media(max-width:860px){
+  .shell{flex-direction:column}
+  .side{width:auto;height:auto;position:static;border-right:none;border-bottom:1px solid var(--card-bd)}
+  .nav{flex-flow:row wrap}.nav .cat{width:100%}
+  .main{padding:26px 18px 60px}
+}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.eyebrow::before{content:"";width:40px;height:2px;background:var(--gold)}
+h1{font-size:2.5rem;font-weight:800;color:#fff;margin:12px 0 0;letter-spacing:-.02em;line-height:1.06}
 h1 em{font-style:italic;color:var(--gold);font-weight:800}
-.rule{width:140px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin:18px 0 14px;border-radius:2px}
-.lead{font-size:1rem;color:#b9bdd0;max-width:760px;font-weight:400}
+.rule{width:120px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin:16px 0 12px;border-radius:2px}
+.lead{font-size:.95rem;color:#b9bdd0;max-width:760px}
 .lead b{color:#e8e9f0;font-weight:600}
-/* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px;margin:34px 0 10px}
-.kpi{background:var(--card);border:1px solid var(--card-bd);border-radius:18px;padding:22px 24px;backdrop-filter:blur(6px);transition:.3s var(--t)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:28px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--card-bd);border-radius:16px;padding:20px 22px;transition:.3s var(--t)}
 .kpi:hover{transform:translateY(-3px);border-color:var(--line)}
-.kpi .lbl{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#9aa0bd}
-.kpi .val{font-size:1.85rem;font-weight:800;color:#fff;margin-top:8px;letter-spacing:-.02em}
-.kpi .hint{font-size:.76rem;color:#8e93b0;margin-top:4px;font-weight:500}
+.kpi .lbl{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#9aa0bd}
+.kpi .val{font-size:1.7rem;font-weight:800;color:#fff;margin-top:7px;letter-spacing:-.02em}
+.kpi .hint{font-size:.74rem;color:#8e93b0;margin-top:3px;font-weight:500}
 .kpi.gold{background:linear-gradient(135deg,rgba(207,163,110,.18),rgba(207,163,110,.06));border-color:var(--line)}
 .kpi.gold .val{color:var(--gold-soft)}
-/* sections */
-section{background:var(--card);border:1px solid var(--card-bd);border-radius:20px;padding:26px 28px;margin-top:22px;backdrop-filter:blur(6px)}
-h2{font-size:1.18rem;font-weight:700;color:#fff;margin-bottom:5px;letter-spacing:-.01em}
+section{background:var(--card);border:1px solid var(--card-bd);border-radius:18px;padding:24px 26px;margin-top:20px}
+h2{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:5px}
 h2 .ico{color:var(--gold);margin-right:8px}
-.secsub{font-size:.84rem;color:#9aa0bd;margin-bottom:18px;font-weight:400}
+.secsub{font-size:.82rem;color:#9aa0bd;margin-bottom:16px}
 .secsub .adefinir{color:var(--red);font-weight:600}
-table{width:100%;border-collapse:collapse;font-size:.86rem}
-th{text-align:left;padding:11px 13px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);font-weight:700;border-bottom:1px solid var(--line)}
+/* cabecalho-resumo de cada categoria */
+.cathead{display:flex;align-items:flex-start;gap:16px;margin-bottom:4px}
+.cathead .bar{width:5px;align-self:stretch;border-radius:3px;min-height:52px}
+.cathead .info{flex:1}
+.cathead h1{font-size:1.9rem;margin:0}
+.cathead .resumo{font-size:1rem;color:#cfd3e4;margin-top:6px;font-weight:600}
+.cathead .resumo b{color:var(--gold-soft)}
+.cathead .desc{font-size:.88rem;color:#9aa0bd;margin-top:4px;font-weight:400}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:left;padding:11px 12px;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gold);font-weight:700;border-bottom:1px solid var(--line)}
 th.num{text-align:right}
-td{padding:11px 13px;border-bottom:1px solid rgba(255,255,255,.055);vertical-align:top;color:#d4d7e4}
+td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.055);vertical-align:top;color:#d4d7e4}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:rgba(255,255,255,.03)}
 .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tot td{font-weight:700;color:#fff;border-top:1px solid var(--line);background:rgba(207,163,110,.06)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-@media(max-width:800px){.grid2{grid-template-columns:1fr}h1{font-size:2.2rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:780px){.grid2{grid-template-columns:1fr}h1{font-size:2rem}}
 .tag{display:inline-block;padding:3px 11px;border-radius:20px;font-size:.71rem;font-weight:600;white-space:nowrap}
 .f-pronto{background:rgba(76,175,114,.16);color:#7ed79b}
 .f-verificar{background:rgba(249,168,37,.15);color:#ffcb5c}
@@ -66,159 +90,167 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 .f-judicial{background:rgba(99,145,210,.17);color:#9ec0f0}
 .f-excluir{background:rgba(255,255,255,.08);color:#9aa0bd}
 .adefinir{color:#ff9088;font-weight:700}
-.barra{display:flex;flex-wrap:wrap;gap:9px;margin:4px 0 18px}
-.chip{border:1px solid var(--card-bd);background:transparent;border-radius:22px;padding:7px 17px;font-size:.8rem;font-weight:600;color:#9aa0bd;cursor:pointer;transition:.2s;font-family:inherit}
-.chip:hover{border-color:var(--gold);color:var(--gold-soft)}
-.chip.on{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
-.busca{width:100%;padding:11px 16px;background:rgba(0,0,0,.2);border:1px solid var(--card-bd);border-radius:12px;font-family:inherit;font-size:.86rem;color:#e8e9f0;margin-bottom:14px}
-.busca::placeholder{color:#6f7496}
-.busca:focus{outline:none;border-color:var(--gold)}
+.busca{width:100%;padding:11px 15px;background:rgba(0,0,0,.2);border:1px solid var(--card-bd);border-radius:11px;font-family:inherit;font-size:.85rem;color:#e8e9f0;margin-bottom:14px}
+.busca::placeholder{color:#6f7496}.busca:focus{outline:none;border-color:var(--gold)}
 .det-cli{font-weight:600;color:#fff}
-.det-sub{font-size:.74rem;color:#8e93b0;margin-top:2px}
+.det-sub{font-size:.73rem;color:#8e93b0;margin-top:2px}
 .mini{font-size:.76rem;color:#9aa0bd}
 .empty{text-align:center;color:#6f7496;padding:28px}
-footer{text-align:center;font-size:.76rem;color:#7f84a3;margin-top:36px;font-weight:500;line-height:1.7}
+footer{font-size:.75rem;color:#7f84a3;margin-top:34px;font-weight:500;line-height:1.7}
 footer .adefinir{color:#ff9088}
+.hidden{display:none}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="logo">SILVA <b>&amp;</b> SILVA <span style="font-weight:500;opacity:.7">· Advogados Associados</span></div>
+<div class="shell">
+  <aside class="side">
+    <div class="logo">SILVA <b>&amp;</b> SILVA<span>Controladoria · Êxitos</span></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
 
-  <header>
-    <div class="eyebrow">Silva &amp; Silva Advogados · Controladoria</div>
-    <h1>Receitas <em>em Aberto</em></h1>
-    <div class="rule"></div>
-    <div class="lead" id="lead">Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b>.</div>
-  </header>
-
-  <div class="kpis" id="kpis"></div>
-
-  <section>
-    <h2><span class="ico">◆</span>Resumo por encaminhamento</h2>
-    <div class="secsub">Cada receita recebeu uma ação conforme a conferência da controladoria e o status no sistema.</div>
-    <table id="tblResumo"><thead><tr><th>Ação</th><th class="num">Qtde</th><th class="num">Valor (R$)</th><th>Encaminhamento</th></tr></thead><tbody></tbody></table>
-  </section>
-
-  <div class="grid2">
-    <section>
-      <h2><span class="ico">◆</span>Por tipo</h2>
-      <div class="secsub">Êxito (1.1.01) e Sucumbência (1.1.06).</div>
-      <table id="tblTipo"><thead><tr><th>Tipo</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
-    </section>
-    <section>
-      <h2><span class="ico">◆</span>Por via</h2>
-      <div class="secsub">Judicial (com processo) ou extrajudicial (acordo, permuta, objeto de contrato).</div>
-      <table id="tblVia"><thead><tr><th>Via</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
-    </section>
-  </div>
-
-  <section>
-    <h2><span class="ico">◆</span>Cobrar · em detalhe</h2>
-    <div class="secsub" id="cobrarSub">As receitas marcadas para cobrar, com situação de decisão, processo e situação atual no sistema.</div>
-    <input class="busca" id="buscaCobrar" placeholder="Buscar nesta lista de cobrança...">
-    <div style="overflow-x:auto">
-    <table id="tblCobrar"><thead><tr>
-      <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Processo / autos</th><th>Parcela</th><th>Situação atual no sistema</th>
-    </tr></thead><tbody></tbody></table>
+  <main class="main">
+    <!-- VISAO GERAL -->
+    <div class="view" id="view-geral">
+      <div class="eyebrow">Silva &amp; Silva Advogados · Controladoria</div>
+      <h1>Receitas <em>em Aberto</em></h1>
+      <div class="rule"></div>
+      <div class="lead" id="lead">Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b>.</div>
+      <div class="kpis" id="kpis"></div>
+      <section>
+        <h2><span class="ico">◆</span>Resumo por situação</h2>
+        <div class="secsub">Cada receita tem um farol conforme a conferência da controladoria e o status no sistema. Clique numa categoria ao lado para ver as receitas.</div>
+        <table id="tblResumo"><thead><tr><th>Situação</th><th class="num">Qtde</th><th class="num">Valor (R$)</th><th>O que significa</th></tr></thead><tbody></tbody></table>
+      </section>
+      <div class="grid2">
+        <section>
+          <h2><span class="ico">◆</span>Por tipo</h2>
+          <div class="secsub">Êxito (1.1.01) e Sucumbência (1.1.06).</div>
+          <table id="tblTipo"><thead><tr><th>Tipo</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
+        </section>
+        <section>
+          <h2><span class="ico">◆</span>Por via</h2>
+          <div class="secsub">Judicial (com processo) ou extrajudicial (acordo, permuta, objeto de contrato).</div>
+          <table id="tblVia"><thead><tr><th>Via</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
+        </section>
+      </div>
     </div>
-  </section>
 
-  <section>
-    <h2><span class="ico">◆</span>Receitas, uma a uma</h2>
-    <div class="secsub">Valores em <span class="adefinir">a definir</span> estão como R$ 0,10 no sistema: o valor real é apurado na cobrança, conforme o valor atualizado do êxito.</div>
-    <input class="busca" id="busca" placeholder="Buscar cliente, processo, situação...">
-    <div class="barra" id="filtros"></div>
-    <table id="tblDet"><thead><tr>
-      <th>Cliente</th><th>Tipo / Via</th><th class="num">Valor (R$)</th><th>Situação</th><th>Próximo passo</th><th>Processo</th><th>Situação atual no sistema</th>
-    </tr></thead><tbody></tbody></table>
-  </section>
+    <!-- VIEW DE CATEGORIA (farol) -->
+    <div class="view hidden" id="view-cat">
+      <div class="eyebrow">Silva &amp; Silva Advogados · Controladoria</div>
+      <div class="cathead" style="margin-top:12px">
+        <div class="bar" id="catBar"></div>
+        <div class="info">
+          <h1 id="catTitulo"></h1>
+          <div class="resumo" id="catResumo"></div>
+          <div class="desc" id="catDesc"></div>
+        </div>
+      </div>
+      <div class="rule"></div>
+      <section>
+        <input class="busca" id="buscaCat" placeholder="Buscar nesta lista...">
+        <div style="overflow-x:auto">
+        <table id="tblCat"><thead><tr>
+          <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Processo / autos</th><th>Parcela</th><th>Situação atual no sistema</th>
+        </tr></thead><tbody></tbody></table>
+        </div>
+      </section>
+    </div>
 
-  <footer id="rodape"></footer>
+    <footer id="rodape"></footer>
+  </main>
 </div>
 
 <script src="dados.js"></script>
 <script>
-const ACAO_LBL={"COBRAR":"Cobrar","AGUARDAR/FRENTE":"Aguardar","ACAO JUDICIAL":"Em ação judicial","PENDENTE VER MARI/KIM":"Pendente (Mari / Dr. Kim)","EXCLUIR/CANCELAR":"Excluir ou cancelar"};
-const ACAO_ENC={"COBRAR":"Receitas corretas; o farol indica se já pode faturar","AGUARDAR/FRENTE":"Aguardar orientação da diretoria ou evento futuro","ACAO JUDICIAL":"Em cobrança judicial; acompanhar o processo","PENDENTE VER MARI/KIM":"Pendente de definição com Mari / Dr. Kim","EXCLUIR/CANCELAR":"Canceladas no sistema (duplicadas ou indevidas)"};
-const ACAO_ORD=["COBRAR","AGUARDAR/FRENTE","ACAO JUDICIAL","PENDENTE VER MARI/KIM","EXCLUIR/CANCELAR"];
-const FAROL_CLS={"PRONTO":"f-pronto","VERIFICAR":"f-verificar","NAO COBRAR AINDA":"f-nao","AGUARDAR":"f-aguardar","ACAO JUDICIAL":"f-judicial","EXCLUIR":"f-excluir","PAGO":"f-excluir"};
-const FAROL_LBL={"PRONTO":"Pronto p/ faturar","VERIFICAR":"Verificar","NAO COBRAR AINDA":"Não cobrar ainda","AGUARDAR":"Aguardar","ACAO JUDICIAL":"Em ação judicial","EXCLUIR":"Excluir/cancelar","PAGO":"Já recebido"};
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
+const ACAO_LBL={"COBRAR":"Cobrar","AGUARDAR/FRENTE":"Aguardar","ACAO JUDICIAL":"Em ação judicial","PENDENTE VER MARI/KIM":"Pendente","EXCLUIR/CANCELAR":"Excluir/cancelar"};
+// definicao das categorias por FAROL (ordem do menu)
+const CATS=[
+ {key:"PRONTO", nome:"Pronto para faturar", cls:"f-pronto", cor:"#4caf72",
+  desc:"Êxito materializado (trânsito em julgado, arquivamento, acordo homologado) ou NF já emitida. Pode faturar."},
+ {key:"VERIFICAR", nome:"Verificar", cls:"f-verificar", cor:"#F9A825",
+  desc:"Confirmar documento, valor ou número de parcelas antes de emitir a cobrança."},
+ {key:"NAO COBRAR AINDA", nome:"Não cobrar ainda", cls:"f-nao", cor:"#e5554a",
+  desc:"Depende de evento futuro: decisão, alvará, precatório, escritura ou acordo em revisão."},
+ {key:"AGUARDAR", nome:"Aguardar", cls:"f-aguardar", cor:"#F9A825",
+  desc:"Aguardar conforme orientação da diretoria / evento futuro."},
+ {key:"ACAO JUDICIAL", nome:"Em ação judicial", cls:"f-judicial", cor:"#6391d2",
+  desc:"Em cobrança judicial; acompanhar o andamento do processo."},
+ {key:"EXCLUIR", nome:"Excluir / Cancelar", cls:"f-excluir", cor:"#8a8f9e",
+  desc:"Canceladas no sistema (duplicadas ou indevidas)."},
+];
+const FAROL_LBL=Object.fromEntries(CATS.map(c=>[c.key,c.nome]));
+const FAROL_CLS=Object.fromEntries(CATS.map(c=>[c.key,c.cls]));
 
 if(window.BASE_INFO){document.getElementById('lead').innerHTML='Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b> · fonte: EasyJur · atualizado em '+BASE_INFO.geradoEm+'.';}
 
+// ---- KPIs (home) ----
 const totReal=DADOS.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);
 const nDef=DADOS.filter(isDef).length;
-const cobrar=DADOS.filter(r=>r.acao==='COBRAR');
-const cobrarReal=cobrar.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);
 const prontos=DADOS.filter(r=>r.farol==='PRONTO'&&!isDef(r)).reduce((s,r)=>s+r.valor,0);
-const kpis=[
-  {lbl:'Receitas em aberto',val:DADOS.length,hint:'linhas conferidas no sistema'},
-  {lbl:'Valor total',val:'R$ '+brl(totReal),hint:nDef+' receitas com valor a apurar',gold:true},
-  {lbl:'Marcadas para cobrar',val:'R$ '+brl(cobrarReal),hint:cobrar.length+' receitas'},
-  {lbl:'Prontas para faturar',val:'R$ '+brl(prontos),hint:'êxito materializado ou NF emitida'},
-];
-document.getElementById('kpis').innerHTML=kpis.map(k=>`<div class="kpi${k.gold?' gold':''}"><div class="lbl">${k.lbl}</div><div class="val">${k.val}</div><div class="hint">${k.hint}</div></div>`).join('');
+const cobravel=DADOS.filter(r=>r.acao==='COBRAR'&&!isDef(r)).reduce((s,r)=>s+r.valor,0);
+document.getElementById('kpis').innerHTML=[
+ {lbl:'Receitas em aberto',val:DADOS.length,hint:'conferidas no sistema'},
+ {lbl:'Valor total',val:'R$ '+brl(totReal),hint:nDef+' com valor a apurar',gold:true},
+ {lbl:'Marcadas para cobrar',val:'R$ '+brl(cobravel),hint:DADOS.filter(r=>r.acao==='COBRAR').length+' receitas'},
+ {lbl:'Prontas para faturar',val:'R$ '+brl(prontos),hint:DADOS.filter(r=>r.farol==='PRONTO').length+' receitas'},
+].map(k=>`<div class="kpi${k.gold?' gold':''}"><div class="lbl">${k.lbl}</div><div class="val">${k.val}</div><div class="hint">${k.hint}</div></div>`).join('');
 
-function agrupa(campo){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=isDef(r)?0:r.valor;if(isDef(r))m[k][2]++;});return m;}
-const porAcao=agrupa('acao');
+// ---- agrupamentos ----
+function tot(itens){return itens.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);}
+function porFarol(k){return DADOS.filter(r=>r.farol===k);}
+
+// resumo por situacao (home)
 let html='';let tq=0,tv=0;
-ACAO_ORD.forEach(a=>{if(!porAcao[a])return;const[q,v,d]=porAcao[a];tq+=q;tv+=v;
-  html+=`<tr><td><b style="color:#fff">${ACAO_LBL[a]}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?` <span class="mini adefinir">+${d} a apurar</span>`:''}</td><td style="color:#9aa0bd">${ACAO_ENC[a]}</td></tr>`;});
+CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;const v=tot(it);const d=it.filter(isDef).length;tq+=it.length;tv+=v;
+  html+=`<tr><td><span class="tag ${c.cls}">${c.nome}</span></td><td class="num">${it.length}</td><td class="num">R$ ${brl(v)}${d?` <span class="mini adefinir">+${d}</span>`:''}</td><td style="color:#9aa0bd">${c.desc}</td></tr>`;});
 html+=`<tr class="tot"><td>Total geral</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td><td>${nDef} receitas com valor a apurar</td></tr>`;
 document.querySelector('#tblResumo tbody').innerHTML=html;
 
-function tabelaSimples(campo,sel){const m=agrupa(campo);let h='';let tq=0,tv=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;h+=`<tr><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?` <span class="mini adefinir">+${d}</span>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td></tr>`;document.querySelector(sel).innerHTML=h;}
+function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=isDef(r)?0:r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;h+=`<tr><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?` <span class="mini adefinir">+${d}</span>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td></tr>`;document.querySelector(sel).innerHTML=h;}
 tabelaSimples('tipo','#tblTipo tbody');
 tabelaSimples('via','#tblVia tbody');
 
-let filtroAcao='TODAS';
-const filtros=['TODAS',...ACAO_ORD];
-document.getElementById('filtros').innerHTML=filtros.map(f=>`<span class="chip${f==='TODAS'?' on':''}" data-f="${f}">${f==='TODAS'?'Todas':ACAO_LBL[f]}</span>`).join('');
-document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{filtroAcao=c.dataset.f;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');render();});
-document.getElementById('busca').oninput=render;
+// ---- menu lateral ----
+let navHtml=`<a data-view="geral" class="on"><span>Visão geral</span><span class="n">${DADOS.length}</span></a>`;
+navHtml+=`<div class="cat">Por situação</div>`;
+CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;
+  navHtml+=`<a data-view="cat" data-cat="${c.key}"><span style="display:flex;align-items:center;gap:9px"><span class="dot" style="background:${c.cor}"></span>${c.nome}</span><span class="n">${it.length}</span></a>`;});
+document.getElementById('nav').innerHTML=navHtml;
+document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>{
+  document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on');
+  if(a.dataset.view==='geral'){showGeral();}else{showCat(a.dataset.cat);}
+  window.scrollTo(0,0);
+});
 
-function render(){
-  const q=document.getElementById('busca').value.toLowerCase().trim();
-  let itens=DADOS.slice();
-  if(filtroAcao!=='TODAS')itens=itens.filter(r=>r.acao===filtroAcao);
-  if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id).toLowerCase().includes(q));
-  const ord={};ACAO_ORD.forEach((a,i)=>ord[a]=i);
-  itens.sort((a,b)=>(ord[a.acao]-ord[b.acao])||(b.valor-a.valor));
-  document.querySelector('#tblDet tbody').innerHTML=itens.map(r=>{
-    const fcls=FAROL_CLS[r.farol]||'f-verificar';
-    const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
-    return `<tr>
-      <td><div class="det-cli">${r.cliente}</div><div class="det-sub">ID ${r.id}${r.parcela?' · '+r.parcela:''} · ${r.status_sistema}</div></td>
-      <td>${r.tipo}<div class="det-sub">${r.via}</div></td>
-      <td class="num">${valTxt}</td>
-      <td><span class="tag ${fcls}">${FAROL_LBL[r.farol]||r.farol}</span></td>
-      <td class="mini">${r.proximo_passo||''}</td>
-      <td class="mini">${r.processo||''}</td>
-      <td class="mini">${(r.situacao_atual||'').replace(/</g,'&lt;')}</td>
-    </tr>`;
-  }).join('') || '<tr><td colspan="7" class="empty">Nenhuma receita com esse filtro.</td></tr>';
+function showGeral(){document.getElementById('view-geral').classList.remove('hidden');document.getElementById('view-cat').classList.add('hidden');}
+let catAtual=null;
+function showCat(key){
+  catAtual=key;
+  const c=CATS.find(x=>x.key===key);const it=porFarol(key);const v=tot(it);const d=it.filter(isDef).length;
+  document.getElementById('view-geral').classList.add('hidden');
+  document.getElementById('view-cat').classList.remove('hidden');
+  document.getElementById('catBar').style.background=c.cor;
+  document.getElementById('catTitulo').innerHTML=c.nome;
+  document.getElementById('catResumo').innerHTML=`<b>${it.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
+  document.getElementById('catDesc').textContent=c.desc;
+  document.getElementById('buscaCat').value='';
+  renderCat();
 }
-render();
-
-// ---- Secao "Cobrar em detalhe" ----
-const cobrarItens=DADOS.filter(r=>r.acao==='COBRAR').sort((a,b)=>b.valor-a.valor);
-const cobrarTotal=cobrarItens.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);
-const cobrarDef=cobrarItens.filter(isDef).length;
-document.getElementById('cobrarSub').innerHTML=`<b style="color:#fff">${cobrarItens.length} receita(s)</b> · <b style="color:var(--gold-soft)">R$ ${brl(cobrarTotal)}</b>${cobrarDef?` · <span class="adefinir">${cobrarDef} com valor a apurar</span>`:''}. Situação de decisão = farol + próximo passo.`;
-function renderCobrar(){
-  const q=document.getElementById('buscaCobrar').value.toLowerCase().trim();
-  let itens=cobrarItens.slice();
+document.getElementById('buscaCat').oninput=renderCat;
+function renderCat(){
+  if(!catAtual)return;
+  const q=document.getElementById('buscaCat').value.toLowerCase().trim();
+  let itens=porFarol(catAtual).slice().sort((a,b)=>b.valor-a.valor);
   if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id).toLowerCase().includes(q));
-  document.querySelector('#tblCobrar tbody').innerHTML=itens.map(r=>{
-    const fcls=FAROL_CLS[r.farol]||'f-verificar';
+  document.querySelector('#tblCat tbody').innerHTML=itens.map(r=>{
     const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
-    const decisao=`<span class="tag ${fcls}">${FAROL_LBL[r.farol]||r.farol}</span>${r.proximo_passo?`<div class="det-sub" style="margin-top:4px">${r.proximo_passo}</div>`:''}`;
+    const decisao=`<span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span>${r.proximo_passo?`<div class="det-sub" style="margin-top:4px">${r.proximo_passo}</div>`:''}`;
     return `<tr>
       <td class="mini">${r.id}</td>
-      <td><div class="det-cli">${r.cliente}</div></td>
+      <td><div class="det-cli">${r.cliente}</div><div class="det-sub">Ação: ${ACAO_LBL[r.acao]||r.acao}</div></td>
       <td>${r.tipo}<div class="det-sub">${r.via}</div></td>
       <td class="num">${valTxt}</td>
       <td class="mini">${r.status_sistema}</td>
@@ -227,10 +259,8 @@ function renderCobrar(){
       <td class="mini">${r.parcela||''}</td>
       <td class="mini">${(r.situacao_atual||'').replace(/</g,'&lt;')}</td>
     </tr>`;
-  }).join('') || '<tr><td colspan="9" class="empty">Nenhuma receita encontrada.</td></tr>';
+  }).join('')||'<tr><td colspan="9" class="empty">Nenhuma receita encontrada.</td></tr>';
 }
-document.getElementById('buscaCobrar').oninput=renderCobrar;
-renderCobrar();
 
 document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur<br>valores <span class="adefinir">a definir</span> são apurados na cobrança conforme o valor atualizado do êxito`;
 </script>
