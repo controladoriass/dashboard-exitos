@@ -151,7 +151,7 @@ footer .adefinir{color:#ff9088}
         <input class="busca" id="buscaCat" placeholder="Buscar nesta lista...">
         <div style="overflow-x:auto">
         <table id="tblCat"><thead><tr>
-          <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Processo / autos</th><th>Parcela</th><th>Situação atual no sistema</th>
+          <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Decisão (Yasmin / Dr. Kim)</th><th>Processo / autos</th><th>Parcela</th><th>Situação atual no sistema</th>
         </tr></thead><tbody></tbody></table>
         </div>
       </section>
@@ -255,11 +255,12 @@ function renderCat(){
       <td class="num">${valTxt}</td>
       <td class="mini">${r.status_sistema}</td>
       <td>${decisao}</td>
+      <td class="mini" style="color:var(--gold-soft)">${(r.resolucao_yasmin_kim||'').replace(/</g,'&lt;')}</td>
       <td class="mini">${r.processo||''}</td>
       <td class="mini">${r.parcela||''}</td>
       <td class="mini">${(r.situacao_atual||'').replace(/</g,'&lt;')}</td>
     </tr>`;
-  }).join('')||'<tr><td colspan="9" class="empty">Nenhuma receita encontrada.</td></tr>';
+  }).join('')||'<tr><td colspan="10" class="empty">Nenhuma receita encontrada.</td></tr>';
 }
 
 document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur<br>valores <span class="adefinir">a definir</span> são apurados na cobrança conforme o valor atualizado do êxito`;
