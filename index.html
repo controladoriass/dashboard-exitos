@@ -114,6 +114,17 @@ footer .adefinir{color:#ff9088}
   </div>
 
   <section>
+    <h2><span class="ico">◆</span>Cobrar · em detalhe</h2>
+    <div class="secsub" id="cobrarSub">As receitas marcadas para cobrar, com situação de decisão, processo e situação atual no sistema.</div>
+    <input class="busca" id="buscaCobrar" placeholder="Buscar nesta lista de cobrança...">
+    <div style="overflow-x:auto">
+    <table id="tblCobrar"><thead><tr>
+      <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Processo / autos</th><th>Parcela</th><th>Situação atual no sistema</th>
+    </tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section>
     <h2><span class="ico">◆</span>Receitas, uma a uma</h2>
     <div class="secsub">Valores em <span class="adefinir">a definir</span> estão como R$ 0,10 no sistema: o valor real é apurado na cobrança, conforme o valor atualizado do êxito.</div>
     <input class="busca" id="busca" placeholder="Buscar cliente, processo, situação...">
@@ -191,6 +202,35 @@ function render(){
   }).join('') || '<tr><td colspan="7" class="empty">Nenhuma receita com esse filtro.</td></tr>';
 }
 render();
+
+// ---- Secao "Cobrar em detalhe" ----
+const cobrarItens=DADOS.filter(r=>r.acao==='COBRAR').sort((a,b)=>b.valor-a.valor);
+const cobrarTotal=cobrarItens.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);
+const cobrarDef=cobrarItens.filter(isDef).length;
+document.getElementById('cobrarSub').innerHTML=`<b style="color:#fff">${cobrarItens.length} receita(s)</b> · <b style="color:var(--gold-soft)">R$ ${brl(cobrarTotal)}</b>${cobrarDef?` · <span class="adefinir">${cobrarDef} com valor a apurar</span>`:''}. Situação de decisão = farol + próximo passo.`;
+function renderCobrar(){
+  const q=document.getElementById('buscaCobrar').value.toLowerCase().trim();
+  let itens=cobrarItens.slice();
+  if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id).toLowerCase().includes(q));
+  document.querySelector('#tblCobrar tbody').innerHTML=itens.map(r=>{
+    const fcls=FAROL_CLS[r.farol]||'f-verificar';
+    const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
+    const decisao=`<span class="tag ${fcls}">${FAROL_LBL[r.farol]||r.farol}</span>${r.proximo_passo?`<div class="det-sub" style="margin-top:4px">${r.proximo_passo}</div>`:''}`;
+    return `<tr>
+      <td class="mini">${r.id}</td>
+      <td><div class="det-cli">${r.cliente}</div></td>
+      <td>${r.tipo}<div class="det-sub">${r.via}</div></td>
+      <td class="num">${valTxt}</td>
+      <td class="mini">${r.status_sistema}</td>
+      <td>${decisao}</td>
+      <td class="mini">${r.processo||''}</td>
+      <td class="mini">${r.parcela||''}</td>
+      <td class="mini">${(r.situacao_atual||'').replace(/</g,'&lt;')}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="9" class="empty">Nenhuma receita encontrada.</td></tr>';
+}
+document.getElementById('buscaCobrar').oninput=renderCobrar;
+renderCobrar();
 
 document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur<br>valores <span class="adefinir">a definir</span> são apurados na cobrança conforme o valor atualizado do êxito`;
 </script>
