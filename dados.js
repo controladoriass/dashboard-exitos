@@ -346,7 +346,7 @@ const DADOS = [
 "id": 2192630,
 "cliente": "Célio Pacheco",
 "tipo": "Sucumbência",
-"via": "Extrajudicial",
+"via": "Judicial",
 "valor": 4500,
 "status_sistema": "Aberto",
 "acao": "COBRAR",
@@ -1909,4 +1909,4 @@ const DADOS = [
 "a_definir": false
 }
 ];
-const BASE_INFO = {"base": "Receitas vencidas ate 22/09/2026", "geradoEm": "08/10/2026", "fonte": "EasyJur (status, NF, processo lidos do sistema)"};
+const BASE_INFO = {"base": "Receitas vencidas ate 22/09/2026", "geradoEm": "09/10/2026", "fonte": "EasyJur"};
