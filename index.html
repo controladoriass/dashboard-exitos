@@ -115,8 +115,8 @@ tr.detrow>td{padding:0;border:none}
 .card .fld .vv.movi{color:#9ec0f0}
 .card .fld .vv.yk{color:var(--gold-soft)}
 /* tabelas de tipo/via clicaveis */
-#tblTipo tbody tr:not(.tot),#tblVia tbody tr:not(.tot){cursor:pointer}
-#tblTipo tbody tr:not(.tot):hover,#tblVia tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
+#tblTipo tbody tr:not(.tot),#tblVia tbody tr:not(.tot),#tblSetor tbody tr:not(.tot){cursor:pointer}
+#tblTipo tbody tr:not(.tot):hover,#tblVia tbody tr:not(.tot):hover,#tblSetor tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
 /* resumo por situacao clicavel */
 #tblResumo tbody tr:not(.tot){cursor:pointer}
 #tblResumo tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
@@ -158,6 +158,11 @@ select.colf:focus{outline:none;border-color:var(--gold)}
         </section>
       </div>
       <section>
+        <h2><span class="ico">◆</span>Por setor / área</h2>
+        <div class="secsub">Área do direito de cada receita (Tributário, Cível, Trabalhista, Imobiliário, etc.), conforme o objeto no sistema.</div>
+        <table id="tblSetor"><thead><tr><th>Setor / Área</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
+      </section>
+      <section>
         <h2><span class="ico">◆</span>Resumo por situação</h2>
         <div class="secsub">Quantas receitas e quanto em R$ existe em cada etapa do processo de cobrança: o que já pode ser faturado, o que precisa ser verificado, o que ainda não pode ser cobrado, o que está em ação judicial e o que foi cancelado.</div>
         <table id="tblResumo"><thead><tr><th>Situação</th><th class="num">Qtde</th><th class="num">Valor (R$)</th><th>O que significa</th></tr></thead><tbody></tbody></table>
@@ -182,6 +187,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
           <div class="filtro"><label>Situação</label><select class="colf" id="fFarol"><option value="">Todas</option></select></div>
           <div class="filtro"><label>Tipo</label><select class="colf" id="fTipo"><option value="">Todos</option></select></div>
           <div class="filtro"><label>Via</label><select class="colf" id="fVia"><option value="">Todas</option></select></div>
+          <div class="filtro"><label>Setor</label><select class="colf" id="fSetor"><option value="">Todos</option></select></div>
         </div>
         <table id="tblCat"><thead><tr>
           <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status</th><th>Situação</th>
@@ -193,7 +199,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261009o"></script>
+<script src="dados.js?v=20261009p"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -244,6 +250,7 @@ document.querySelectorAll('#tblResumo tbody tr').forEach(tr=>{const tag=tr.query
 function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0,td=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;td+=d;h+=`<tr data-campo="${campo}" data-valor="${k.replace(/"/g,'&quot;')}"><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">· ${d} em R$ 0,10 (a definir)</div>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}${td?`<div class="mini adefinir" style="font-weight:500">· ${td} a definir</div>`:''}</td></tr>`;const tb=document.querySelector(sel);tb.innerHTML=h;tb.querySelectorAll('tr[data-campo]').forEach(tr=>tr.onclick=()=>showFiltro(tr.dataset.campo,tr.dataset.valor));}
 tabelaSimples('tipo','#tblTipo tbody');
 tabelaSimples('via','#tblVia tbody');
+tabelaSimples('setor','#tblSetor tbody');
 
 // ---- menu lateral ----
 let navHtml=`<a data-view="geral" class="on"><span>Visão geral</span><span class="n">${DADOS.length}</span></a>`;
@@ -267,8 +274,9 @@ function popularFiltros(itens){
   set('fFarol',[...new Set(itens.map(r=>FAROL_LBL[r.farol]||r.farol))].sort());
   set('fTipo',uniq('tipo'));
   set('fVia',uniq('via'));
+  set('fSetor',uniq('setor'));
 }
-['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).onchange=renderCat);
+['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).onchange=renderCat);
 let catAtual=null;      // farol atual
 let filtroTipo=null;    // {campo:'tipo'|'via', valor:'...'}
 function showCat(key){
@@ -280,7 +288,7 @@ function showCat(key){
   document.getElementById('catTitulo').innerHTML=c.nome;
   document.getElementById('catResumo').innerHTML=`<b>${it.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent=c.desc;
-  ['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).value='');
+  ['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>porFarol(catAtual);
   renderCat();
 }
@@ -295,7 +303,7 @@ function showFiltro(campo,valor){
   document.getElementById('catTitulo').innerHTML=valor;
   document.getElementById('catResumo').innerHTML=`<b>${itens.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : 'Todas as receitas desta via.';
-  ['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).value='');
+  ['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>DADOS.filter(r=>r[campo]===valor);
   renderCat(); window.scrollTo(0,0);
 }
@@ -303,12 +311,13 @@ let getItens=()=>[];
 function renderCat(){
   const base=getItens().slice();
   popularFiltros(base);
-  const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value;
+  const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value, fSe=document.getElementById('fSetor').value;
   let itens=base.sort((a,b)=>b.valor-a.valor);
   if(fSt)itens=itens.filter(r=>r.status_sistema===fSt);
   if(fFa)itens=itens.filter(r=>(FAROL_LBL[r.farol]||r.farol)===fFa);
   if(fTi)itens=itens.filter(r=>r.tipo===fTi);
   if(fVi)itens=itens.filter(r=>r.via===fVi);
+  if(fSe)itens=itens.filter(r=>r.setor===fSe);
   const esc=s=>(s||'').replace(/</g,'&lt;');
   document.querySelector('#tblCat tbody').innerHTML=itens.map((r,i)=>{
     const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
@@ -316,6 +325,7 @@ function renderCat(){
     const card=`<div class="card">
       <div class="fld"><div class="k">ID</div><div class="vv">${r.id}</div></div>
       <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}</div></div>
+      <div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
       <div class="fld"><div class="k">Situação (farol)</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
