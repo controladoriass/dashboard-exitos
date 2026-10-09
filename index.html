@@ -158,7 +158,7 @@ footer .adefinir{color:#ff9088}
   </main>
 </div>
 
-<script src="dados.js"></script>
+<script src="dados.js?v=20261009b"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -189,11 +189,11 @@ const nDef=DADOS.filter(isDef).length;
 const prontos=DADOS.filter(r=>r.farol==='PRONTO'&&!isDef(r)).reduce((s,r)=>s+r.valor,0);
 const cobravel=DADOS.filter(r=>r.acao==='COBRAR'&&!isDef(r)).reduce((s,r)=>s+r.valor,0);
 document.getElementById('kpis').innerHTML=[
- {lbl:'Receitas em aberto',val:DADOS.length,hint:'conferidas no sistema'},
- {lbl:'Valor total',val:'R$ '+brl(totReal),hint:nDef+' com valor a apurar',gold:true},
- {lbl:'Marcadas para cobrar',val:'R$ '+brl(cobravel),hint:DADOS.filter(r=>r.acao==='COBRAR').length+' receitas'},
- {lbl:'Prontas para faturar',val:'R$ '+brl(prontos),hint:DADOS.filter(r=>r.farol==='PRONTO').length+' receitas'},
-].map(k=>`<div class="kpi${k.gold?' gold':''}"><div class="lbl">${k.lbl}</div><div class="val">${k.val}</div><div class="hint">${k.hint}</div></div>`).join('');
+ {lbl:'Receitas em aberto',val:DADOS.length},
+ {lbl:'Valor total',val:'R$ '+brl(totReal),gold:true},
+ {lbl:'Marcadas para cobrar',val:'R$ '+brl(cobravel)},
+ {lbl:'Prontas para faturar',val:'R$ '+brl(prontos)},
+].map(k=>`<div class="kpi${k.gold?' gold':''}"><div class="lbl">${k.lbl}</div><div class="val">${k.val}</div></div>`).join('');
 
 // ---- agrupamentos ----
 function tot(itens){return itens.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);}
@@ -260,7 +260,7 @@ function renderCat(){
   }).join('')||'<tr><td colspan="10" class="empty">Nenhuma receita encontrada.</td></tr>';
 }
 
-document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur<br>valores <span class="adefinir">a definir</span> são apurados na cobrança conforme o valor atualizado do êxito`;
+document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur<br>Os valores exibidos são os que constam no sistema. Apurar os valores atualizados e reais no ato da cobrança.`;
 </script>
 </body>
 </html>
