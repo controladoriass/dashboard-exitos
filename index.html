@@ -117,6 +117,16 @@ tr.detrow>td{padding:0;border:none}
 /* tabelas de tipo/via clicaveis */
 #tblTipo tbody tr:not(.tot),#tblVia tbody tr:not(.tot){cursor:pointer}
 #tblTipo tbody tr:not(.tot):hover,#tblVia tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
+/* resumo por situacao clicavel */
+#tblResumo tbody tr:not(.tot){cursor:pointer}
+#tblResumo tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
+/* botao voltar */
+.voltar{background:transparent;border:1px solid var(--card-bd);color:var(--gold-soft);font-family:inherit;font-weight:600;font-size:.82rem;padding:8px 16px;border-radius:10px;cursor:pointer;margin-bottom:16px;transition:.2s}
+.voltar:hover{border-color:var(--gold);background:rgba(207,163,110,.08)}
+/* seletores de coluna */
+select.colf{margin-top:5px;display:block;width:100%;background:rgba(0,0,0,.25);color:#e8e9f0;border:1px solid var(--card-bd);border-radius:7px;padding:4px 7px;font-family:inherit;font-size:.74rem;font-weight:500;cursor:pointer}
+select.colf:focus{outline:none;border-color:var(--gold)}
+tr.subf th{padding-top:0;border:none}
 </style>
 </head>
 <body>
@@ -154,6 +164,7 @@ tr.detrow>td{padding:0;border:none}
 
     <!-- VIEW DE CATEGORIA (farol) -->
     <div class="view hidden" id="view-cat">
+      <button class="voltar" id="btnVoltar">← Voltar à visão geral</button>
       <div class="cathead" style="margin-top:4px">
         <div class="bar" id="catBar"></div>
         <div class="info">
@@ -165,9 +176,15 @@ tr.detrow>td{padding:0;border:none}
       <div class="rule"></div>
       <section>
         <input class="busca" id="buscaCat" placeholder="Buscar nesta lista...">
-        <div class="secsub" style="margin-bottom:10px">Clique numa receita para abrir todas as informações que justificam a situação.</div>
+        <div class="secsub" style="margin-bottom:10px">Clique numa receita para abrir todas as informações. Use os seletores no cabeçalho para filtrar.</div>
         <table id="tblCat"><thead><tr>
-          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação</th>
+          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th>
+          <th>Status <select class="colf" id="fStatus"><option value="">todos</option></select></th>
+          <th>Situação <select class="colf" id="fFarol"><option value="">todas</option></select></th>
+        </tr>
+        <tr class="subf"><th></th><th></th><th></th>
+          <th>Tipo <select class="colf" id="fTipo"><option value="">todos</option></select></th>
+          <th>Via <select class="colf" id="fVia"><option value="">todas</option></select></th>
         </tr></thead><tbody></tbody></table>
       </section>
     </div>
@@ -221,6 +238,8 @@ CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;const v=tot(it);c
   html+=`<tr><td><span class="tag ${c.cls}">${c.nome}</span></td><td class="num">${it.length}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">+ ${d} em R$ 0,10 (valor a definir)</div>`:''}</td><td style="color:#9aa0bd">${c.desc}</td></tr>`;});
 html+=`<tr class="tot"><td>Total geral</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td><td>${nDef} receitas com valor a apurar</td></tr>`;
 document.querySelector('#tblResumo tbody').innerHTML=html;
+// resumo por situacao clicavel -> abre a categoria
+document.querySelectorAll('#tblResumo tbody tr').forEach(tr=>{const tag=tr.querySelector('.tag');if(!tag)return;const nome=tag.textContent.trim();const c=CATS.find(x=>x.nome===nome);if(c)tr.onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));const na=document.querySelector(`#nav a[data-cat="${c.key}"]`);if(na)na.classList.add('on');showCat(c.key);window.scrollTo(0,0);};});
 
 function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0,td=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;td+=d;h+=`<tr data-campo="${campo}" data-valor="${k.replace(/"/g,'&quot;')}"><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">· ${d} em R$ 0,10 (a definir)</div>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}${td?`<div class="mini adefinir" style="font-weight:500">· ${td} a definir</div>`:''}</td></tr>`;const tb=document.querySelector(sel);tb.innerHTML=h;tb.querySelectorAll('tr[data-campo]').forEach(tr=>tr.onclick=()=>showFiltro(tr.dataset.campo,tr.dataset.valor));}
 tabelaSimples('tipo','#tblTipo tbody');
@@ -238,7 +257,18 @@ document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>{
   window.scrollTo(0,0);
 });
 
-function showGeral(){document.getElementById('view-geral').classList.remove('hidden');document.getElementById('view-cat').classList.add('hidden');}
+function showGeral(){document.getElementById('view-geral').classList.remove('hidden');document.getElementById('view-cat').classList.add('hidden');window.scrollTo(0,0);}
+document.getElementById('btnVoltar').onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));const g=document.querySelector('#nav a[data-view="geral"]');if(g)g.classList.add('on');showGeral();};
+// popula os seletores de filtro de coluna a partir dos itens atuais
+function popularFiltros(itens){
+  const uniq=(campo)=>[...new Set(itens.map(r=>r[campo]).filter(Boolean))].sort();
+  const set=(selId,vals,atual)=>{const s=document.getElementById(selId);const keep=s.value;s.innerHTML=`<option value="">${s.id==='fFarol'||s.id==='fVia'?'todas':'todos'}</option>`+vals.map(v=>`<option value="${v.replace(/"/g,'&quot;')}">${v}</option>`).join('');if(vals.includes(keep))s.value=keep;};
+  set('fStatus',uniq('status_sistema'));
+  set('fFarol',[...new Set(itens.map(r=>FAROL_LBL[r.farol]||r.farol))].sort());
+  set('fTipo',uniq('tipo'));
+  set('fVia',uniq('via'));
+}
+['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).onchange=renderCat);
 let catAtual=null;      // farol atual
 let filtroTipo=null;    // {campo:'tipo'|'via', valor:'...'}
 function showCat(key){
@@ -251,6 +281,7 @@ function showCat(key){
   document.getElementById('catResumo').innerHTML=`<b>${it.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent=c.desc;
   document.getElementById('buscaCat').value='';
+  ['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>porFarol(catAtual);
   renderCat();
 }
@@ -266,15 +297,23 @@ function showFiltro(campo,valor){
   document.getElementById('catResumo').innerHTML=`<b>${itens.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : 'Todas as receitas desta via.';
   document.getElementById('buscaCat').value='';
+  ['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>DADOS.filter(r=>r[campo]===valor);
   renderCat(); window.scrollTo(0,0);
 }
 let getItens=()=>[];
 document.getElementById('buscaCat').oninput=renderCat;
 function renderCat(){
+  const base=getItens().slice();
+  popularFiltros(base);
   const q=document.getElementById('buscaCat').value.toLowerCase().trim();
-  let itens=getItens().slice().sort((a,b)=>b.valor-a.valor);
+  const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value;
+  let itens=base.sort((a,b)=>b.valor-a.valor);
   if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id+' '+r.resolucao_yasmin_kim).toLowerCase().includes(q));
+  if(fSt)itens=itens.filter(r=>r.status_sistema===fSt);
+  if(fFa)itens=itens.filter(r=>(FAROL_LBL[r.farol]||r.farol)===fFa);
+  if(fTi)itens=itens.filter(r=>r.tipo===fTi);
+  if(fVi)itens=itens.filter(r=>r.via===fVi);
   const esc=s=>(s||'').replace(/</g,'&lt;');
   document.querySelector('#tblCat tbody').innerHTML=itens.map((r,i)=>{
     const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
