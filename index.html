@@ -121,12 +121,14 @@ tr.detrow>td{padding:0;border:none}
 #tblResumo tbody tr:not(.tot){cursor:pointer}
 #tblResumo tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
 /* botao voltar */
-.voltar{background:transparent;border:1px solid var(--card-bd);color:var(--gold-soft);font-family:inherit;font-weight:600;font-size:.82rem;padding:8px 16px;border-radius:10px;cursor:pointer;margin-bottom:16px;transition:.2s}
-.voltar:hover{border-color:var(--gold);background:rgba(207,163,110,.08)}
-/* seletores de coluna */
-select.colf{margin-top:5px;display:block;width:100%;background:rgba(0,0,0,.25);color:#e8e9f0;border:1px solid var(--card-bd);border-radius:7px;padding:4px 7px;font-family:inherit;font-size:.74rem;font-weight:500;cursor:pointer}
+.voltar{background:var(--gold);border:none;color:var(--navy-deep);font-family:inherit;font-weight:700;font-size:.82rem;padding:9px 18px;border-radius:10px;cursor:pointer;margin-bottom:18px;transition:.2s}
+.voltar:hover{background:var(--gold-soft);transform:translateX(-2px)}
+/* barra de filtros horizontal */
+.filtros{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.filtro{display:flex;flex-direction:column;gap:4px}
+.filtro label{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+select.colf{background:rgba(0,0,0,.25);color:#e8e9f0;border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;font-family:inherit;font-size:.82rem;font-weight:500;cursor:pointer;min-width:150px}
 select.colf:focus{outline:none;border-color:var(--gold)}
-tr.subf th{padding-top:0;border:none}
 </style>
 </head>
 <body>
@@ -175,16 +177,14 @@ tr.subf th{padding-top:0;border:none}
       </div>
       <div class="rule"></div>
       <section>
-        <input class="busca" id="buscaCat" placeholder="Buscar nesta lista...">
-        <div class="secsub" style="margin-bottom:10px">Clique numa receita para abrir todas as informações. Use os seletores no cabeçalho para filtrar.</div>
+        <div class="filtros">
+          <div class="filtro"><label>Status</label><select class="colf" id="fStatus"><option value="">Todos</option></select></div>
+          <div class="filtro"><label>Situação</label><select class="colf" id="fFarol"><option value="">Todas</option></select></div>
+          <div class="filtro"><label>Tipo</label><select class="colf" id="fTipo"><option value="">Todos</option></select></div>
+          <div class="filtro"><label>Via</label><select class="colf" id="fVia"><option value="">Todas</option></select></div>
+        </div>
         <table id="tblCat"><thead><tr>
-          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th>
-          <th>Status <select class="colf" id="fStatus"><option value="">todos</option></select></th>
-          <th>Situação <select class="colf" id="fFarol"><option value="">todas</option></select></th>
-        </tr>
-        <tr class="subf"><th></th><th></th><th></th>
-          <th>Tipo <select class="colf" id="fTipo"><option value="">todos</option></select></th>
-          <th>Via <select class="colf" id="fVia"><option value="">todas</option></select></th>
+          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status</th><th>Situação</th>
         </tr></thead><tbody></tbody></table>
       </section>
     </div>
@@ -280,7 +280,6 @@ function showCat(key){
   document.getElementById('catTitulo').innerHTML=c.nome;
   document.getElementById('catResumo').innerHTML=`<b>${it.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent=c.desc;
-  document.getElementById('buscaCat').value='';
   ['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>porFarol(catAtual);
   renderCat();
@@ -296,20 +295,16 @@ function showFiltro(campo,valor){
   document.getElementById('catTitulo').innerHTML=valor;
   document.getElementById('catResumo').innerHTML=`<b>${itens.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : 'Todas as receitas desta via.';
-  document.getElementById('buscaCat').value='';
   ['fStatus','fFarol','fTipo','fVia'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>DADOS.filter(r=>r[campo]===valor);
   renderCat(); window.scrollTo(0,0);
 }
 let getItens=()=>[];
-document.getElementById('buscaCat').oninput=renderCat;
 function renderCat(){
   const base=getItens().slice();
   popularFiltros(base);
-  const q=document.getElementById('buscaCat').value.toLowerCase().trim();
   const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value;
   let itens=base.sort((a,b)=>b.valor-a.valor);
-  if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id+' '+r.resolucao_yasmin_kim).toLowerCase().includes(q));
   if(fSt)itens=itens.filter(r=>r.status_sistema===fSt);
   if(fFa)itens=itens.filter(r=>(FAROL_LBL[r.farol]||r.farol)===fFa);
   if(fTi)itens=itens.filter(r=>r.tipo===fTi);
