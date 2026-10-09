@@ -101,6 +101,22 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 footer{font-size:.75rem;color:#7f84a3;margin-top:34px;font-weight:500;line-height:1.7}
 footer .adefinir{color:#ff9088}
 .hidden{display:none}
+/* linha clicavel (acordeao) */
+tr.rowline{cursor:pointer;transition:background .15s}
+tr.rowline:hover{background:rgba(207,163,110,.06)}
+tr.rowline .chev{display:inline-block;transition:transform .2s;color:var(--gold);margin-right:6px;font-size:.8rem}
+tr.rowline.open .chev{transform:rotate(90deg)}
+tr.detrow>td{padding:0;border:none}
+.card{background:rgba(207,163,110,.05);border:1px solid var(--line);border-radius:12px;margin:2px 0 12px;padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card .fld{min-width:0}
+.card .fld .k{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.card .fld .vv{font-size:.86rem;color:#e8e9f0;word-wrap:break-word}
+.card .fld.full{grid-column:1/-1}
+.card .fld .vv.movi{color:#9ec0f0}
+.card .fld .vv.yk{color:var(--gold-soft)}
+/* tabelas de tipo/via clicaveis */
+#tblTipo tbody tr:not(.tot),#tblVia tbody tr:not(.tot){cursor:pointer}
+#tblTipo tbody tr:not(.tot):hover,#tblVia tbody tr:not(.tot):hover{background:rgba(207,163,110,.06)}
 </style>
 </head>
 <body>
@@ -149,11 +165,10 @@ footer .adefinir{color:#ff9088}
       <div class="rule"></div>
       <section>
         <input class="busca" id="buscaCat" placeholder="Buscar nesta lista...">
-        <div style="overflow-x:auto">
+        <div class="secsub" style="margin-bottom:10px">Clique numa receita para abrir todas as informações que justificam a situação.</div>
         <table id="tblCat"><thead><tr>
-          <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Decisão (Yasmin / Dr. Kim)</th><th>Processo / autos</th><th>Parcela</th><th>Última movimentação (processo)</th><th>Situação atual no sistema</th>
+          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação</th>
         </tr></thead><tbody></tbody></table>
-        </div>
       </section>
     </div>
 
@@ -207,7 +222,7 @@ CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;const v=tot(it);c
 html+=`<tr class="tot"><td>Total geral</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td><td>${nDef} receitas com valor a apurar</td></tr>`;
 document.querySelector('#tblResumo tbody').innerHTML=html;
 
-function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0,td=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;td+=d;h+=`<tr><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">· ${d} em R$ 0,10 (a definir)</div>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}${td?`<div class="mini adefinir" style="font-weight:500">· ${td} a definir</div>`:''}</td></tr>`;document.querySelector(sel).innerHTML=h;}
+function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0,td=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;td+=d;h+=`<tr data-campo="${campo}" data-valor="${k.replace(/"/g,'&quot;')}"><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">· ${d} em R$ 0,10 (a definir)</div>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}${td?`<div class="mini adefinir" style="font-weight:500">· ${td} a definir</div>`:''}</td></tr>`;const tb=document.querySelector(sel);tb.innerHTML=h;tb.querySelectorAll('tr[data-campo]').forEach(tr=>tr.onclick=()=>showFiltro(tr.dataset.campo,tr.dataset.valor));}
 tabelaSimples('tipo','#tblTipo tbody');
 tabelaSimples('via','#tblVia tbody');
 
@@ -224,9 +239,10 @@ document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>{
 });
 
 function showGeral(){document.getElementById('view-geral').classList.remove('hidden');document.getElementById('view-cat').classList.add('hidden');}
-let catAtual=null;
+let catAtual=null;      // farol atual
+let filtroTipo=null;    // {campo:'tipo'|'via', valor:'...'}
 function showCat(key){
-  catAtual=key;
+  catAtual=key; filtroTipo=null;
   const c=CATS.find(x=>x.key===key);const it=porFarol(key);const v=tot(it);const d=it.filter(isDef).length;
   document.getElementById('view-geral').classList.add('hidden');
   document.getElementById('view-cat').classList.remove('hidden');
@@ -235,31 +251,61 @@ function showCat(key){
   document.getElementById('catResumo').innerHTML=`<b>${it.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent=c.desc;
   document.getElementById('buscaCat').value='';
+  getItens=()=>porFarol(catAtual);
   renderCat();
 }
+// abre a vista de um TIPO ou VIA (clicando na tabela da home)
+function showFiltro(campo,valor){
+  filtroTipo={campo,valor}; catAtual=null;
+  const itens=DADOS.filter(r=>r[campo]===valor); const v=tot(itens); const d=itens.filter(isDef).length;
+  document.getElementById('view-geral').classList.add('hidden');
+  document.getElementById('view-cat').classList.remove('hidden');
+  document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));
+  document.getElementById('catBar').style.background='#CFA36E';
+  document.getElementById('catTitulo').innerHTML=valor;
+  document.getElementById('catResumo').innerHTML=`<b>${itens.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
+  document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : 'Todas as receitas desta via.';
+  document.getElementById('buscaCat').value='';
+  getItens=()=>DADOS.filter(r=>r[campo]===valor);
+  renderCat(); window.scrollTo(0,0);
+}
+let getItens=()=>[];
 document.getElementById('buscaCat').oninput=renderCat;
 function renderCat(){
-  if(!catAtual)return;
   const q=document.getElementById('buscaCat').value.toLowerCase().trim();
-  let itens=porFarol(catAtual).slice().sort((a,b)=>b.valor-a.valor);
-  if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id).toLowerCase().includes(q));
-  document.querySelector('#tblCat tbody').innerHTML=itens.map(r=>{
+  let itens=getItens().slice().sort((a,b)=>b.valor-a.valor);
+  if(q)itens=itens.filter(r=>(r.cliente+' '+r.processo+' '+r.situacao_atual+' '+r.id+' '+r.resolucao_yasmin_kim).toLowerCase().includes(q));
+  const esc=s=>(s||'').replace(/</g,'&lt;');
+  document.querySelector('#tblCat tbody').innerHTML=itens.map((r,i)=>{
     const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
-    const decisao=`<span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span>${r.proximo_passo?`<div class="det-sub" style="margin-top:4px">${r.proximo_passo}</div>`:''}`;
-    return `<tr>
-      <td class="mini">${r.id}</td>
-      <td><div class="det-cli">${r.cliente}</div><div class="det-sub">Ação: ${ACAO_LBL[r.acao]||r.acao}</div></td>
-      <td>${r.tipo}<div class="det-sub">${r.via}</div></td>
-      <td class="num">${valTxt}</td>
-      <td class="mini">${r.status_sistema}</td>
-      <td>${decisao}</td>
-      <td class="mini" style="color:var(--gold-soft)">${(r.resolucao_yasmin_kim||'').replace(/</g,'&lt;')}</td>
-      <td class="mini">${r.processo||''}</td>
-      <td class="mini">${r.parcela||''}</td>
-      <td class="mini">${r.ultima_movimentacao?`<span style="color:#9ec0f0">${r.ultima_movimentacao.replace(/</g,'&lt;')}</span>`:'<span style="color:#6f7496">—</span>'}</td>
-      <td class="mini">${(r.situacao_atual||'').replace(/</g,'&lt;')}</td>
-    </tr>`;
-  }).join('')||'<tr><td colspan="11" class="empty">Nenhuma receita encontrada.</td></tr>';
+    // linha resumida clicavel + linha de detalhe (card) escondida
+    const card=`<div class="card">
+      <div class="fld"><div class="k">ID</div><div class="vv">${r.id}</div></div>
+      <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}</div></div>
+      <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
+      <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
+      <div class="fld"><div class="k">Situação (farol)</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
+      <div class="fld"><div class="k">Próximo passo</div><div class="vv">${esc(r.proximo_passo)}</div></div>
+      <div class="fld"><div class="k">Processo / autos</div><div class="vv">${esc(r.processo)}</div></div>
+      <div class="fld"><div class="k">Parcela</div><div class="vv">${esc(r.parcela)||'—'}</div></div>
+      <div class="fld full"><div class="k">O que diz a planilha (Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.resolucao_yasmin_kim)||'—'}</div></div>
+      <div class="fld full"><div class="k">Última movimentação do processo</div><div class="vv movi">${esc(r.ultima_movimentacao)||'— (sem movimentação registrada)'}</div></div>
+      <div class="fld full"><div class="k">O que diz o sistema (situação atual)</div><div class="vv">${esc(r.situacao_atual)}</div></div>
+    </div>`;
+    return `<tr class="rowline" data-i="${i}">
+        <td class="mini"><span class="chev">▶</span>${r.id}</td>
+        <td><div class="det-cli">${r.cliente}</div><div class="det-sub">${r.tipo} · ${r.via}</div></td>
+        <td class="num">${valTxt}</td>
+        <td class="mini">${esc(r.status_sistema)}</td>
+        <td><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></td>
+      </tr>
+      <tr class="detrow hidden" data-det="${i}"><td colspan="5">${card}</td></tr>`;
+  }).join('')||'<tr><td colspan="5" class="empty">Nenhuma receita encontrada.</td></tr>';
+  // liga o acordeao
+  document.querySelectorAll('#tblCat tr.rowline').forEach(row=>row.onclick=()=>{
+    const i=row.dataset.i; const det=document.querySelector(`#tblCat tr[data-det="${i}"]`);
+    det.classList.toggle('hidden'); row.classList.toggle('open');
+  });
 }
 
 </script>
