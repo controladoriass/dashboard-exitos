@@ -203,7 +203,7 @@ function porFarol(k){return DADOS.filter(r=>r.farol===k);}
 // resumo por situacao (home)
 let html='';let tq=0,tv=0;
 CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;const v=tot(it);const d=it.filter(isDef).length;tq+=it.length;tv+=v;
-  html+=`<tr><td><span class="tag ${c.cls}">${c.nome}</span></td><td class="num">${it.length}</td><td class="num">R$ ${brl(v)}${d?` <span class="mini adefinir">+${d}</span>`:''}</td><td style="color:#9aa0bd">${c.desc}</td></tr>`;});
+  html+=`<tr><td><span class="tag ${c.cls}">${c.nome}</span></td><td class="num">${it.length}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">+ ${d} em R$ 0,10 (valor a definir)</div>`:''}</td><td style="color:#9aa0bd">${c.desc}</td></tr>`;});
 html+=`<tr class="tot"><td>Total geral</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td><td>${nDef} receitas com valor a apurar</td></tr>`;
 document.querySelector('#tblResumo tbody').innerHTML=html;
 
