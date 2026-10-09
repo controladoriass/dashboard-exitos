@@ -194,7 +194,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261009q"></script>
+<script src="dados.js?v=20261009r"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -330,8 +330,8 @@ function renderCat(){
       <div class="fld"><div class="k">Contrato vinculado</div><div class="vv">${esc(r.contrato_vinculado)}</div></div>
       <div class="fld"><div class="k">Parcela</div><div class="vv">${parcelaTxt}</div></div>
       <div class="fld full"><div class="k">O que diz a planilha (Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.resolucao_yasmin_kim)||'(sem anotação na planilha)'}</div></div>
-      <div class="fld full"><div class="k">Última movimentação do processo</div><div class="vv movi">${esc(r.ultima_movimentacao)||'(sem movimentação registrada)'}</div></div>
-      <div class="fld full"><div class="k">O que diz o sistema (situação atual)</div><div class="vv">${esc(r.situacao_atual)}</div></div>
+      <div class="fld full"><div class="k">Último registro / andamento</div><div class="vv movi">${esc(r.ultima_movimentacao)||'(sem movimentação registrada)'}</div></div>
+      <div class="fld full"><div class="k">Descrição da receita / objeto</div><div class="vv">${esc(r.situacao_atual)}</div></div>
     </div>`;
     return `<tr class="rowline" data-i="${i}">
         <td class="mini"><span class="chev">▶</span>${r.id}</td>
