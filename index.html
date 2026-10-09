@@ -302,7 +302,7 @@ function showFiltro(campo,valor){
   document.getElementById('catBar').style.background='#CFA36E';
   document.getElementById('catTitulo').innerHTML=valor;
   document.getElementById('catResumo').innerHTML=`<b>${itens.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
-  document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : 'Todas as receitas desta via.';
+  document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : (campo==='setor' ? 'Todas as receitas deste setor.' : 'Todas as receitas desta via.');
   ['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>DADOS.filter(r=>r[campo]===valor);
   renderCat(); window.scrollTo(0,0);
@@ -328,7 +328,7 @@ function renderCat(){
       <div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
-      <div class="fld"><div class="k">Situação (farol)</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
+      <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
       <div class="fld"><div class="k">Próximo passo</div><div class="vv">${esc(r.proximo_passo)}</div></div>
       <div class="fld"><div class="k">Processo / autos</div><div class="vv"${/não encontrado/i.test(r.processo)?' style="color:#ff9088"':''}>${esc(r.processo)}</div></div>
       <div class="fld"><div class="k">Contrato vinculado</div><div class="vv">${esc(r.contrato_vinculado)}</div></div>
