@@ -193,7 +193,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261009n"></script>
+<script src="dados.js?v=20261009o"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -320,7 +320,8 @@ function renderCat(){
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
       <div class="fld"><div class="k">Situação (farol)</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
       <div class="fld"><div class="k">Próximo passo</div><div class="vv">${esc(r.proximo_passo)}</div></div>
-      <div class="fld"><div class="k">Processo / autos</div><div class="vv">${esc(r.processo)}</div></div>
+      <div class="fld"><div class="k">Processo / autos</div><div class="vv"${/não encontrado/i.test(r.processo)?' style="color:#ff9088"':''}>${esc(r.processo)}</div></div>
+      <div class="fld"><div class="k">Contrato vinculado</div><div class="vv">${esc(r.contrato_vinculado)}</div></div>
       <div class="fld"><div class="k">Parcela</div><div class="vv">${esc(r.parcela)||'—'}</div></div>
       <div class="fld full"><div class="k">O que diz a planilha (Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.resolucao_yasmin_kim)||'—'}</div></div>
       <div class="fld full"><div class="k">Última movimentação do processo</div><div class="vv movi">${esc(r.ultima_movimentacao)||'— (sem movimentação registrada)'}</div></div>
