@@ -207,7 +207,7 @@ CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;const v=tot(it);c
 html+=`<tr class="tot"><td>Total geral</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td><td>${nDef} receitas com valor a apurar</td></tr>`;
 document.querySelector('#tblResumo tbody').innerHTML=html;
 
-function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=isDef(r)?0:r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;h+=`<tr><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?` <span class="mini adefinir">+${d}</span>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}</td></tr>`;document.querySelector(sel).innerHTML=h;}
+function tabelaSimples(campo,sel){const m={};DADOS.forEach(r=>{const k=r[campo];if(!m[k])m[k]=[0,0,0];m[k][0]++;m[k][1]+=r.valor;if(isDef(r))m[k][2]++;});let h='';let tq=0,tv=0,td=0;Object.keys(m).sort((a,b)=>m[b][1]-m[a][1]).forEach(k=>{const[q,v,d]=m[k];tq+=q;tv+=v;td+=d;h+=`<tr><td><b style="color:#fff">${k}</b></td><td class="num">${q}</td><td class="num">R$ ${brl(v)}${d?`<div class="mini adefinir" style="font-weight:500">· ${d} em R$ 0,10 (a definir)</div>`:''}</td></tr>`;});h+=`<tr class="tot"><td>Total</td><td class="num">${tq}</td><td class="num">R$ ${brl(tv)}${td?`<div class="mini adefinir" style="font-weight:500">· ${td} a definir</div>`:''}</td></tr>`;document.querySelector(sel).innerHTML=h;}
 tabelaSimples('tipo','#tblTipo tbody');
 tabelaSimples('via','#tblVia tbody');
 
