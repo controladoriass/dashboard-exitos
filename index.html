@@ -51,6 +51,8 @@ h1 em{font-style:italic;color:var(--gold);font-weight:800}
 .rule{width:120px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin:16px 0 12px;border-radius:2px}
 .lead{font-size:.95rem;color:#b9bdd0;max-width:760px}
 .lead b{color:#e8e9f0;font-weight:600}
+.aviso{margin-top:16px;padding:12px 18px;background:rgba(207,163,110,.1);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;font-size:.88rem;color:#d4d7e4;max-width:760px}
+.aviso b{color:var(--gold-soft);font-weight:600}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:28px 0 8px}
 .kpi{background:var(--card);border:1px solid var(--card-bd);border-radius:16px;padding:20px 22px;transition:.3s var(--t)}
 .kpi:hover{transform:translateY(-3px);border-color:var(--line)}
@@ -113,6 +115,7 @@ footer .adefinir{color:#ff9088}
       <h1>Receitas <em>em Aberto</em></h1>
       <div class="rule"></div>
       <div class="lead" id="lead">Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b>.</div>
+      <div class="aviso">Os valores exibidos são os que constam no sistema. <b>Apurar os valores atualizados e reais no ato da cobrança.</b></div>
       <div class="kpis" id="kpis"></div>
       <section>
         <h2><span class="ico">◆</span>Resumo por situação</h2>
@@ -191,8 +194,6 @@ const cobravel=DADOS.filter(r=>r.acao==='COBRAR'&&!isDef(r)).reduce((s,r)=>s+r.v
 document.getElementById('kpis').innerHTML=[
  {lbl:'Receitas em aberto',val:DADOS.length},
  {lbl:'Valor total',val:'R$ '+brl(totReal),gold:true},
- {lbl:'Marcadas para cobrar',val:'R$ '+brl(cobravel)},
- {lbl:'Prontas para faturar',val:'R$ '+brl(prontos)},
 ].map(k=>`<div class="kpi${k.gold?' gold':''}"><div class="lbl">${k.lbl}</div><div class="val">${k.val}</div></div>`).join('');
 
 // ---- agrupamentos ----
@@ -260,7 +261,7 @@ function renderCat(){
   }).join('')||'<tr><td colspan="10" class="empty">Nenhuma receita encontrada.</td></tr>';
 }
 
-document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur<br>Os valores exibidos são os que constam no sistema. Apurar os valores atualizados e reais no ato da cobrança.`;
+document.getElementById('rodape').innerHTML=`${DADOS.length} receitas · documento interno da Controladoria · dados do EasyJur`;
 </script>
 </body>
 </html>
