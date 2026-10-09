@@ -151,7 +151,7 @@ footer .adefinir{color:#ff9088}
         <input class="busca" id="buscaCat" placeholder="Buscar nesta lista...">
         <div style="overflow-x:auto">
         <table id="tblCat"><thead><tr>
-          <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Decisão (Yasmin / Dr. Kim)</th><th>Processo / autos</th><th>Parcela</th><th>Situação atual no sistema</th>
+          <th>ID</th><th>Cliente</th><th>Tipo</th><th class="num">Valor (R$)</th><th>Status (sistema)</th><th>Situação de decisão</th><th>Decisão (Yasmin / Dr. Kim)</th><th>Processo / autos</th><th>Parcela</th><th>Última movimentação (processo)</th><th>Situação atual no sistema</th>
         </tr></thead><tbody></tbody></table>
         </div>
       </section>
@@ -161,15 +161,15 @@ footer .adefinir{color:#ff9088}
   </main>
 </div>
 
-<script src="dados.js?v=20261009c"></script>
+<script src="dados.js?v=20261009d"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
 const ACAO_LBL={"COBRAR":"Cobrar","AGUARDAR/FRENTE":"Aguardar","ACAO JUDICIAL":"Em ação judicial","PENDENTE VER MARI/KIM":"Pendente","EXCLUIR/CANCELAR":"Excluir/cancelar"};
 // definicao das categorias por FAROL (ordem do menu)
 const CATS=[
- {key:"PRONTO", nome:"Pronto para faturar", cls:"f-pronto", cor:"#4caf72",
-  desc:"Êxito materializado (trânsito em julgado, arquivamento, acordo homologado) ou NF já emitida. Pode faturar."},
+ {key:"PRONTO", nome:"Possível faturamento (verificar)", cls:"f-pronto", cor:"#4caf72",
+  desc:"Pela leitura da controladoria (status no sistema e resolução da Yasmin), não há impedimento aparente: êxito que parece materializado (trânsito em julgado, arquivamento, acordo homologado, NF emitida) ou receita correta sem ressalva. Não é autorização do Dr. Kim: verificar cada ID (o que consta no processo e as últimas movimentações) antes de faturar."},
  {key:"VERIFICAR", nome:"Verificar", cls:"f-verificar", cor:"#F9A825",
   desc:"Confirmar documento, valor ou número de parcelas antes de emitir a cobrança."},
  {key:"NAO COBRAR AINDA", nome:"Não cobrar ainda", cls:"f-nao", cor:"#e5554a",
@@ -256,9 +256,10 @@ function renderCat(){
       <td class="mini" style="color:var(--gold-soft)">${(r.resolucao_yasmin_kim||'').replace(/</g,'&lt;')}</td>
       <td class="mini">${r.processo||''}</td>
       <td class="mini">${r.parcela||''}</td>
+      <td class="mini">${r.ultima_movimentacao?`<span style="color:#9ec0f0">${r.ultima_movimentacao.replace(/</g,'&lt;')}</span>`:'<span style="color:#6f7496">—</span>'}</td>
       <td class="mini">${(r.situacao_atual||'').replace(/</g,'&lt;')}</td>
     </tr>`;
-  }).join('')||'<tr><td colspan="10" class="empty">Nenhuma receita encontrada.</td></tr>';
+  }).join('')||'<tr><td colspan="11" class="empty">Nenhuma receita encontrada.</td></tr>';
 }
 
 </script>

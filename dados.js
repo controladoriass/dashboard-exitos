@@ -14,6 +14,7 @@ const DADOS = [
 "parcela": "1/2",
 "nf": "",
 "situacao_atual": "Correto, são contratos diferentes",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Correto, são contratos diferentes",
 "alerta": "",
 "a_definir": false
@@ -32,6 +33,7 @@ const DADOS = [
 "parcela": "2/2",
 "nf": "",
 "situacao_atual": "Gilmar de Lima; exito a pagar 06/2026 e 07/2026; lancado 100%",
+"ultima_movimentacao": "31/03/2022 - Processo migrado para o PJe (processo Ativo (2o grau, TRF1))",
 "resolucao_yasmin_kim": "Correto, são contratos diferentes",
 "alerta": "",
 "a_definir": false
@@ -50,6 +52,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Jose Leonel; exito acordo; VERIFICAR COM DR WILLIAN QUANTAS PARCELAS SAO (indefinido)",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, saldo remanescente",
 "alerta": "",
 "a_definir": false
@@ -68,6 +71,7 @@ const DADOS = [
 "parcela": "1/1 (1 de 10 do acordo)",
 "nf": "",
 "situacao_atual": "Confissao de divida L S Ferreira; honor 10% (10x R$213,74), 1a em 15/09/2022",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, Êxito parcelado em 10x, cliente não pagou 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -86,6 +90,7 @@ const DADOS = [
 "parcela": "parc acordo",
 "nf": "",
 "situacao_atual": "Confissao de divida L S Ferreira; honor 10% (10x R$213,74)",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, Êxito parcelado em 10x, cliente não pagou 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -104,6 +109,7 @@ const DADOS = [
 "parcela": "parc acordo",
 "nf": "",
 "situacao_atual": "Confissao de divida L S Ferreira; honor 10% (10x R$213,74)",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, Êxito parcelado em 10x, cliente não pagou 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -122,6 +128,7 @@ const DADOS = [
 "parcela": "parc acordo",
 "nf": "",
 "situacao_atual": "Confissao de divida L S Ferreira; honor 10% (10x R$213,74); faturado=true",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, Êxito parcelado em 10x, cliente não pagou 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -140,6 +147,7 @@ const DADOS = [
 "parcela": "4/5",
 "nf": "6088 parcial",
 "situacao_atual": "Acordo extrajudicial Compass x Murilo Moritz; repasse 110,40",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, Êxito parcelado em 5x, cliente não pagou 2 parcelas",
 "alerta": "",
 "a_definir": false
@@ -158,6 +166,7 @@ const DADOS = [
 "parcela": "5/5",
 "nf": "6088 complemento",
 "situacao_atual": "Acordo extrajudicial Compass x Murilo Moritz; repasse 110,40",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, Êxito parcelado em 5x, cliente não pagou 2 parcelas",
 "alerta": "",
 "a_definir": false
@@ -176,6 +185,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Valdemir; sucumbencia; status ABERTO/VENCIDO no sistema (nao ha baixa lancada); observacao diz 'ja pago, so baixar' mas NAO cobrar; ver acerto FLN com Mari e baixa com Dr. Kim",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Mantido esse  e excluido id duplicado | CONTROLADORIA: consta pago na observacao mas no sistema esta ABERTO/VENCIDO; nao cobrar; ver acerto FLN com Mari e forma de baixa com Dr. Kim",
 "alerta": "",
 "a_definir": false
@@ -194,6 +204,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). Contrato suspenso para virar o do id 3916889 (Brava Beach); exito R$80.000 na hipotese; alinhado Dr Kim 28/09",
+"ultima_movimentacao": "16/10/2024 - Baixa Definitiva (processo Baixado 16/10/2024)",
 "resolucao_yasmin_kim": "Cancelado, pois contrato foi suspenso para virar o contrato do ID 3916889 (que até essa data não saiu)",
 "alerta": "",
 "a_definir": false
@@ -212,6 +223,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Exito R$80.000 na hipotese de exito, corrigido IPCA",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -230,6 +242,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). Honor sucesso R$15.000 SE acao julgada improcedente (condicional)",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "ID CANCELADO, NÃO VIROU AÇÃO JUDICIAL.",
 "alerta": "",
 "a_definir": false
@@ -248,6 +261,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Russi; 5% de exito sobre entrada R$300.000; audio Dr Maiko 24/09, alinhar fluxo com Sr Ricardo; cliente paga a cada 6 meses",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -266,6 +280,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Exito = cancelamento de hipoteca por qualquer meio",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -284,6 +299,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Honor fixo R$12.000 na cessao de quotas Irmaos Pinto",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -302,6 +318,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Russi x Altair Marchi; EXITO ATRELADO A REUNIAO COM DR MAIKO 22/01/2026",
+"ultima_movimentacao": "(sem ultimo andamento datado; distribuido 04/08/2025) (processo Ativo)",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -320,6 +337,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Russi x Gustavo Gums; EXITO ATRELADO A REUNIAO COM DR MAIKO 21/01/2026",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -338,6 +356,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Celio Pacheco; execucao fiscal; anulacao total divida; 10% de R$45.367,87",
+"ultima_movimentacao": "05/11/2024 - EXTINTA a execucao (sentenca) [exito concretizado] (processo Ativo)",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -356,6 +375,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Sucumbencia Itau (Celio Pacheco); venc 20/04/2020",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -374,6 +394,7 @@ const DADOS = [
 "parcela": "1/4",
 "nf": "",
 "situacao_atual": "Valmir; reajuste IGPM; total R$16.283,84 em 4x",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO - 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -392,6 +413,7 @@ const DADOS = [
 "parcela": "2/4",
 "nf": "",
 "situacao_atual": "Valmir; reajuste IGPM; parcela 2/4",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO - 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -410,6 +432,7 @@ const DADOS = [
 "parcela": "3/4",
 "nf": "",
 "situacao_atual": "Valmir; reajuste IGPM; parcela 3/4",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO - 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -428,6 +451,7 @@ const DADOS = [
 "parcela": "4/4",
 "nf": "",
 "situacao_atual": "Valmir (filho Abner); reajuste IGPM; parcela 4/4",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO - 4 parcelas",
 "alerta": "",
 "a_definir": false
@@ -446,6 +470,7 @@ const DADOS = [
 "parcela": "acordo 10%",
 "nf": "3884",
 "situacao_atual": "Acordo extrajud Inoven x Widerson Santos; parcela R$1.100 x10%",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -464,6 +489,7 @@ const DADOS = [
 "parcela": "acordo 10%",
 "nf": "3685",
 "situacao_atual": "Acordo extrajud Inoven x Widerson Santos",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -482,6 +508,7 @@ const DADOS = [
 "parcela": "acordo 10%",
 "nf": "",
 "situacao_atual": "Acordo extrajud Inoven x Widerson Santos",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -500,6 +527,7 @@ const DADOS = [
 "parcela": "acordo 10%",
 "nf": "",
 "situacao_atual": "Acordo extrajud Inoven x Widerson Santos",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -518,6 +546,7 @@ const DADOS = [
 "parcela": "acordo 10%",
 "nf": "",
 "situacao_atual": "Acordo extrajud Inoven x Widerson Santos",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -536,6 +565,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Warusky; revisao fiscal IRPJ/CSLL; MS com seguranca DENEGADA 01/05/2025 (1a inst); contrato=8%, obs=10%; valor a ratificar Dr Kim",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Contratos diferentes, um mais geral e outro pra irpjj. Preciso ver com Dr Kim",
 "alerta": "",
 "a_definir": true
@@ -554,6 +584,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "ATENCAO: status A (nao cancelado). Komeco/Komlog: saiu decisao mandando expedir alvara; colocar no radar; verificar c/ Dr Kim e cuidar deposito. Valor 0,10 placeholder",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "ID 3578452 EXCLUIDO, DUPLICADO.",
 "alerta": "",
 "a_definir": true
@@ -572,6 +603,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Russi (Antidio Reis); exito 2,5% s/ valor causa, so com transito em julgado; EXITO AINDA NAO SAIU; VER MARI",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "VER MARI",
 "alerta": "",
 "a_definir": true
@@ -590,6 +622,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Colinas ABC x G.A Investimentos (em rec. judicial); ATENCAO: 'nao fui autorizado pelo Dr Maiko', valor 0,10, ainda ver sobre exito",
+"ultima_movimentacao": "04/05/2026 - distribuido CUMPRIMENTO DE SENTENCA 5004500-25.2026.8.24.0113 (processo Baixado 25/02/2025)",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": true
@@ -608,6 +641,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Permuta Shopping Andorinha; R$150.000 na assinatura da escritura de permuta; depende da escritura ser assinada",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -626,6 +660,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Celio Pacheco; exito R$1.010.651,57 x10% = 101.065,16; print anexo no sistema",
+"ultima_movimentacao": "26/06/2026 - Decorrido prazo (Evento 256) (processo Ativo)",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -644,6 +679,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Jose Leonel; honorarios 1o aditivo contrato 17/07/2020 (dissolucao Cota Empreendimentos); VER MARI",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "VER MARI",
 "alerta": "",
 "a_definir": false
@@ -662,6 +698,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Reclamatoria trabalhista (Renatec/Roberto Santos); valor acao R$868.799; exito 10%=R$86.879,90 (lancado R$71.679,49); em acao judicial de cobranca",
+"ultima_movimentacao": "13/05/2023 - Remetidos os autos para orgao jurisdicional competente (recurso) (processo Baixado)",
 "resolucao_yasmin_kim": "AÇÃO JUDICIAL COBRANÇA",
 "alerta": "",
 "a_definir": false
@@ -680,6 +717,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Jose Caetano Ambrosio x Varella Motos; TRANSITO EM JULGADO 02/12/2025; 10% s/ R$692.380; MADURO",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -698,6 +736,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Moonville - multa Ed. Galli; TETO contratual corrigido IGP-M=R$66.422,35; exito=8% do valor reduzido ATE o teto; FALTA apurar reducao obtida p/ confirmar se teto foi atingido; competencia 2027",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -716,6 +755,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Sandra Ambrosio x Banrisul; sentenca improcedente garantiu imovel; exito 10% s/ base sugerida R$650k (conferir contrato); valor estimado",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -734,6 +774,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "so imagem no sistema; precisa verificar objeto no GED do contrato 71703",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -752,6 +793,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Sandra Ambrosio x Banrisul; ARQUIVADO DEF. 17/09/2025; TRANSITO EM JULGADO 29/06/2025; 10% s/ R$524.818; MADURO",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -770,6 +812,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Russi; reintegracao de posse; processo ATIVO em fase de instrucao (2o grau); exito R$50.000; VER MARI",
+"ultima_movimentacao": "Em fase de instrucao (sem ultimo andamento datado) (processo Ativo (2o grau))",
 "resolucao_yasmin_kim": "VER MARI",
 "alerta": "",
 "a_definir": false
@@ -788,6 +831,7 @@ const DADOS = [
 "parcela": "7/31",
 "nf": "",
 "situacao_atual": "Honorarios diversos; parcela 7/31 (total R$310.000)",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -806,6 +850,7 @@ const DADOS = [
 "parcela": "1/1 (50% Silva)",
 "nf": "",
 "situacao_atual": "Exito R$100.000 (50% Silva=50.000); devido em 10 dias da decisao do TRF1 que revogue tutela do Incra; CONDICIONADO a decisao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -824,6 +869,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -842,6 +888,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -860,6 +907,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -878,6 +926,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -896,6 +945,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -914,6 +964,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -932,6 +983,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -950,6 +1002,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -968,6 +1021,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -986,6 +1040,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1004,6 +1059,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1022,6 +1078,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1040,6 +1097,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1058,6 +1116,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1076,6 +1135,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1094,6 +1154,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1112,6 +1173,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1130,6 +1192,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1148,6 +1211,7 @@ const DADOS = [
 "parcela": "parcela tributario (20x)",
 "nf": "",
 "situacao_atual": "Binotto S/A; exito tributario R$25.000/parcela (20x, base R$1mi); AGUARDAR conforme orientacao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, AINDA NÃO COBRAR (DR KIM)",
 "alerta": "",
 "a_definir": false
@@ -1166,6 +1230,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Exito contrato de parceria Jorge Maurique SIA x Silva&Silva; verificar objeto",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1184,6 +1249,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Marco Aurelio Ambrosio MG7; ARQUIVAMENTO da representacao fiscal penal; exito R$25.000; MADURO",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1202,6 +1268,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Acordo Grace Bay Residence x Vanderlei Fiorati; parcela c/ correcao INPC+juros; R$16.017,11 corrigido=R$19.143,55",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1220,6 +1287,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Alianca x Camboriu (ISS); precatorio; exito 10%=R$16.700; Dr Kim 28/09 jogar p/ 31/12/26, provavel receber esse ano",
+"ultima_movimentacao": "31/05/2024 - Juntada de certidao, traslado p/ 5004216-21.2024.8.24.0005 (processo Ativo)",
 "resolucao_yasmin_kim": "Dr Kim disse que não saiu, jogar para 31/12/26, provável que receberemos ainda esse ano",
 "alerta": "",
 "a_definir": false
@@ -1238,6 +1306,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "BHM Textil; exito SELIC 10% de R$160.000; contrato assessoria encerrado 16/07/2025; VER MARI",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "VER MARI",
 "alerta": "",
 "a_definir": false
@@ -1256,6 +1325,7 @@ const DADOS = [
 "parcela": "2/2",
 "nf": "",
 "situacao_atual": "Acao Stalin Passos; cliente pagou 1a, 2a ficou p/ decisao judicial; Mariana cobrou 30/03/2026, cliente diz que ficou com adv Bertollo, Maiko vai ver; AGUARDAR decisao",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1274,6 +1344,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Exito = 30 dias na posse do imovel (imobiliario); venc antigo 05/02/2018",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1292,6 +1363,7 @@ const DADOS = [
 "parcela": "9/12",
 "nf": "8317 AUTHORIZED",
 "situacao_atual": "Embrafrio; execucao fiscal; extincao parcial divida R$1,67mi; 10% em 12x; NF emitida, parcela 9/12 em aberto",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1310,6 +1382,7 @@ const DADOS = [
 "parcela": "10/12",
 "nf": "8510 AUTHORIZED",
 "situacao_atual": "Embrafrio; 10% em 12x; NF emitida, parcela 10/12 em aberto",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1328,6 +1401,7 @@ const DADOS = [
 "parcela": "11/12",
 "nf": "8676 AUTHORIZED",
 "situacao_atual": "Embrafrio; 10% em 12x; NF emitida, parcela 11/12 em aberto",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1346,6 +1420,7 @@ const DADOS = [
 "parcela": "12/12",
 "nf": "8859 AUTHORIZED",
 "situacao_atual": "Embrafrio; parcela final 12/12; NF emitida mas boleto DELETED",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1364,6 +1439,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Roberto Carlos de Souza; inquerito policial; processo BAIXADO 05/09/2025; sem contrato cadastrado; parcela 1/3; VER MARI",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "VER MARI",
 "alerta": "",
 "a_definir": false
@@ -1382,6 +1458,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Contrato 2006 prestacao de servicos; varios remanescentes; verificar objeto no GED",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1400,6 +1477,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Pacheco Automoveis; exceca pre-executividade, PRESCRICAO INTERCORRENTE reconhecida; cancelou R$64.030,96; 10%=R$6.403,10; MADURO",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1418,6 +1496,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Acao criminal; R$20.000 corrigido IGPM=R$51.091,41; 'IR cobrando Adenis ate quitar' (cobranca parcial em curso)",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1436,6 +1515,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Honor fixo R$4.000 no encerramento da demanda (50% desc se acordo antes sentenca); Shana cobrou 11/2025, consta em aberto",
+"ultima_movimentacao": "(sem ultimo andamento registrado) (processo Ativo (Inventario))",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1454,6 +1534,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Jose Caetano e Sandra Ambrosio; ANPP; R$25.000 c/ reducao 50% autorizada Dr Kim 11/07/2024; valor remanescente R$2.751,64",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1472,6 +1553,7 @@ const DADOS = [
 "parcela": "4/4",
 "nf": "",
 "situacao_atual": "Confissao de divida contrato 1579; parte Silva 10%; NF programada no valor cheio na ultima parcela",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PORÉM O VALOR A RECEBER É 250,24",
 "alerta": "",
 "a_definir": false
@@ -1490,6 +1572,7 @@ const DADOS = [
 "parcela": "parc 10 acordo",
 "nf": "",
 "situacao_atual": "Acordo extrajud Inoven x Widerson Santos; parcela 10 R$1.925 x10%",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": false
@@ -1508,6 +1591,7 @@ const DADOS = [
 "parcela": "20/24",
 "nf": "",
 "situacao_atual": "Latex Foam do Brasil; acordo judicial; honor contratuais R$46,65",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1526,6 +1610,7 @@ const DADOS = [
 "parcela": "21/24",
 "nf": "",
 "situacao_atual": "Latex Foam; acordo judicial; parcela 21/24",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1544,6 +1629,7 @@ const DADOS = [
 "parcela": "22/24",
 "nf": "",
 "situacao_atual": "Latex Foam; acordo judicial; parcela 22/24",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1562,6 +1648,7 @@ const DADOS = [
 "parcela": "23/24",
 "nf": "",
 "situacao_atual": "Latex Foam; acordo judicial; parcela 23/24",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1580,6 +1667,7 @@ const DADOS = [
 "parcela": "24/24",
 "nf": "",
 "situacao_atual": "Latex Foam; acordo judicial; parcela final 24/24",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1598,6 +1686,7 @@ const DADOS = [
 "parcela": "1/1",
 "nf": "",
 "situacao_atual": "Alianca Empreendimentos; sucumbencia; PRECATORIO AINDA NAO EXPEDIDO; provisionar p/ 01/2026 (precatorio so pago em 2026); NAO COBRAR AINDA",
+"ultima_movimentacao": "31/05/2024 - Juntada de certidao, traslado p/ 5004216-21.2024.8.24.0005 (processo Ativo)",
 "resolucao_yasmin_kim": "CORRETO",
 "alerta": "",
 "a_definir": true
@@ -1616,6 +1705,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). BBS Binotto Solutions x Estado SC; sucumbencia precatoria; valor 0,10",
+"ultima_movimentacao": "(sem ultimo andamento registrado) (processo Ativo)",
 "resolucao_yasmin_kim": "CANCELADO, ESTAVA DUPLICADO",
 "alerta": "",
 "a_definir": true
@@ -1634,6 +1724,7 @@ const DADOS = [
 "parcela": "3/3",
 "nf": "",
 "situacao_atual": "MG7; sucumbencia; AGUARDA EXPEDICAO DE ALVARA (solicitado 25/11/2025); verificar c/ Dr Costella ou Tarcisio",
+"ultima_movimentacao": "25/11/2025 - Alvara disponibilizado ao Magistrado para assinatura (processo Baixado 11/12/2025)",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1652,6 +1743,7 @@ const DADOS = [
 "parcela": "2/3",
 "nf": "",
 "situacao_atual": "MG7; sucumbencia; AGUARDA EXPEDICAO DE ALVARA (solicitado 25/11/2025); verificar c/ Dr Costella ou Tarcisio",
+"ultima_movimentacao": "25/11/2025 - Alvara disponibilizado ao Magistrado para assinatura (processo Baixado 11/12/2025)",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1670,6 +1762,7 @@ const DADOS = [
 "parcela": "1/4",
 "nf": "",
 "situacao_atual": "Russi x Iverts Inthurn Moresco; ATENCAO: acordo homologado 21/08/25 porem PETICIONAMOS DESISTENCIA do acordo p/ prosseguir processo (retorno Dr Thiago); situacao indefinida",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1688,6 +1781,7 @@ const DADOS = [
 "parcela": "2/4",
 "nf": "",
 "situacao_atual": "Russi x Iverts; parcela 2/4; mesma ressalva: desistencia do acordo peticionada",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1706,6 +1800,7 @@ const DADOS = [
 "parcela": "3/4",
 "nf": "",
 "situacao_atual": "Russi x Iverts; parcela 3/4; mesma ressalva",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1724,6 +1819,7 @@ const DADOS = [
 "parcela": "4/4",
 "nf": "",
 "situacao_atual": "Russi x Iverts; parcela 4/4; mesma ressalva",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "CORRETO, PARCELAS",
 "alerta": "",
 "a_definir": false
@@ -1742,6 +1838,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Brava Beach; exito R$300.000 (predio Reserva Recife); Dr Kim 20/03 EXPLICITO: provisionar 150 mil, NAO COBRAR, deixar provisionado",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Dr Kim disse que não saiu, jogar para 2027",
 "alerta": "",
 "a_definir": false
@@ -1760,6 +1857,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Euclides Bragard; exito via cheque bom p/ 10/12/2024",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "AÇÃO JUDICIAL COBRANÇA",
 "alerta": "",
 "a_definir": false
@@ -1778,6 +1876,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). ID incorreto (Dr Kim 28/09): creditos compensados em dez/2025 no id 3565403, ja pago. Revisao PIS/COFINS; 10% de R$1.021.759,77=R$102.175,98",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "ID Cancelado, foi verificado que o id está incorreto, em novembro o cliente não utilizou os créditos compensados. Os créditos foram compensados em dez/2025, no id 3565403 e ja foi pago em 10/02/26",
 "alerta": "",
 "a_definir": false
@@ -1796,6 +1895,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Euclides Bragard; remanescente do id 2191810; exito via cheque",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "AÇÃO JUDICIAL COBRANÇA",
 "alerta": "",
 "a_definir": false
@@ -1814,6 +1914,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Guacemmi Participacoes x Joao Pedro Lemos; exito transito em julgado; Dr Kim 28/09: processo NAO encerrado; ver com Kety",
+"ultima_movimentacao": "04/09/2026 - Conclusos para decisao/despacho (processo Ativo (2o grau))",
 "resolucao_yasmin_kim": "Dr Kim disse que não saiu, jogar para frente",
 "alerta": "",
 "a_definir": false
@@ -1832,6 +1933,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). Acao contra Poti Junior's; Dr Kim 28/09 disse cancelar, indevido",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Dr Kim disse para cancelarmos, indevido",
 "alerta": "",
 "a_definir": false
@@ -1850,6 +1952,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). Dr Kim 28/09: cliente nao fechou contrato, id indevido",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Dr Kim PASSOU QUE O CLIENTE NÃO FECHOU CONTRATO CONOSCO, ID INDEVIDO.",
 "alerta": "",
 "a_definir": false
@@ -1868,6 +1971,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "CANCELADO (status C). Honor sucesso liberacao mercadoria R$10.000; Dr Kim 24/01/2025 solicitou nao cobrar; 28/09 cancelar indevido",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Dr Kim disse para cancelarmos, indevido",
 "alerta": "",
 "a_definir": false
@@ -1886,6 +1990,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Recuperacao Judicial (parceria Petruschky 20%/Benedito); exito classes III+IV; verificar tabela com Dr Daniel",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Dr Kim disse para aguardar, cliente ainda não recebeu crédito",
 "alerta": "",
 "a_definir": false
@@ -1904,6 +2009,7 @@ const DADOS = [
 "parcela": "",
 "nf": "",
 "situacao_atual": "Recuperacao Judicial (Petruschky/Benedito); reducao global debitos R$11,99mi; exito 15%=R$1.799.364,91; VER com Kim ou Mari p/ cobranca, e-mail GED",
+"ultima_movimentacao": "",
 "resolucao_yasmin_kim": "Dr Kim disse para aguardar, cliente ainda não recebeu crédito",
 "alerta": "",
 "a_definir": false
