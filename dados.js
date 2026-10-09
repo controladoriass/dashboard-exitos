@@ -346,7 +346,7 @@ const DADOS = [
 "id": 2192630,
 "cliente": "Célio Pacheco",
 "tipo": "Sucumbência",
-"via": "A definir (standby)",
+"via": "Judicial",
 "valor": 4500,
 "status_sistema": "Aberto",
 "acao": "COBRAR",
