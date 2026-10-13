@@ -194,7 +194,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261009s"></script>
+<script src="dados.js?v=20261013b"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -202,13 +202,13 @@ const ACAO_LBL={"COBRAR":"Cobrar","AGUARDAR/FRENTE":"Aguardar","ACAO JUDICIAL":"
 // definicao das categorias por FAROL (ordem do menu)
 const CATS=[
  {key:"PRONTO", nome:"Possível faturamento (verificar)", cls:"f-pronto", cor:"#4caf72",
-  desc:"O êxito parece ter acontecido (trânsito em julgado, arquivamento, acordo ou NF emitida). Interpretação favorável ao faturamento: verificar cada ID antes de faturar."},
+  desc:"O êxito parece ter acontecido (trânsito em julgado, arquivamento, acordo ou NF emitida). Interpretação favorável ao faturamento: verificar cada ID (valores e situações) antes de faturar."},
  {key:"VERIFICAR", nome:"Verificar", cls:"f-verificar", cor:"#F9A825",
   desc:"Confirmar documento, valor ou número de parcelas antes de emitir a cobrança."},
  {key:"NAO COBRAR AINDA", nome:"Não cobrar ainda", cls:"f-nao", cor:"#e5554a",
-  desc:"O êxito ainda não aconteceu: falta a decisão, o alvará, o precatório ou a escritura. Algumas ainda dependem de confirmação com o Dr. Kim."},
+  desc:"O êxito ainda não aconteceu: falta a decisão, o alvará, o precatório ou a escritura. Alguns foram verificados com o Dr. Kim e ele pediu para aguardar."},
  {key:"AGUARDAR", nome:"Aguardar", cls:"f-aguardar", cor:"#F9A825",
-  desc:"Aguardar conforme orientação da diretoria / evento futuro."},
+  desc:"Aguardar: alguns por evento futuro (ex.: parcelamento em andamento), outros dependem de alinhamento com a diretoria (ex.: Mari), porque ainda não ficou claro."},
  {key:"ACAO JUDICIAL", nome:"Em ação judicial", cls:"f-judicial", cor:"#6391d2",
   desc:"Em cobrança judicial; acompanhar o andamento do processo."},
  {key:"EXCLUIR", nome:"Excluir / Cancelar", cls:"f-excluir", cor:"#8a8f9e",
