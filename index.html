@@ -91,6 +91,7 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 .f-aguardar{background:rgba(249,168,37,.15);color:#ffcb5c}
 .f-judicial{background:rgba(99,145,210,.17);color:#9ec0f0}
 .f-excluir{background:rgba(255,255,255,.08);color:#9aa0bd}
+.f-duvida{background:rgba(169,139,219,.17);color:#c4a9f0}
 .adefinir{color:#ff9088;font-weight:700}
 .busca{width:100%;padding:11px 15px;background:rgba(0,0,0,.2);border:1px solid var(--card-bd);border-radius:11px;font-family:inherit;font-size:.85rem;color:#e8e9f0;margin-bottom:14px}
 .busca::placeholder{color:#6f7496}.busca:focus{outline:none;border-color:var(--gold)}
@@ -194,7 +195,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261013b"></script>
+<script src="dados.js?v=20261013c"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -213,6 +214,8 @@ const CATS=[
   desc:"Em cobrança judicial; acompanhar o andamento do processo."},
  {key:"EXCLUIR", nome:"Excluir / Cancelar", cls:"f-excluir", cor:"#8a8f9e",
   desc:"Canceladas no sistema (duplicadas ou indevidas)."},
+ {key:"EM DUVIDA", nome:"Em dúvida", cls:"f-duvida", cor:"#a98bdb",
+  desc:"Não foi possível classificar com certeza pelos dados do sistema (observação vazia, processo sem resultado, valor ainda não apurado, etc.). O motivo de cada uma está no campo Próximo passo. Precisa de análise da controladoria."},
 ];
 const FAROL_LBL=Object.fromEntries(CATS.map(c=>[c.key,c.nome]));
 const FAROL_CLS=Object.fromEntries(CATS.map(c=>[c.key,c.cls]));
