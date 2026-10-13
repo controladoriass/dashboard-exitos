@@ -194,7 +194,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261009s"></script>
+<script src="dados.js?v=20261013a"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -202,20 +202,21 @@ const ACAO_LBL={"COBRAR":"Cobrar","AGUARDAR/FRENTE":"Aguardar","ACAO JUDICIAL":"
 // definicao das categorias por FAROL (ordem do menu)
 const CATS=[
  {key:"PRONTO", nome:"Possível faturamento (verificar)", cls:"f-pronto", cor:"#4caf72",
-  desc:"O êxito parece ter acontecido (trânsito em julgado, arquivamento, acordo ou NF emitida). Interpretação favorável ao faturamento: verificar cada ID antes de faturar."},
+  desc:"O êxito parece ter acontecido (trânsito em julgado, arquivamento, acordo ou NF emitida). Pode seguir para faturamento, confirmando o ID antes de emitir a cobrança."},
  {key:"VERIFICAR", nome:"Verificar", cls:"f-verificar", cor:"#F9A825",
-  desc:"Confirmar documento, valor ou número de parcelas antes de emitir a cobrança."},
+  desc:"Antes de cobrar, confirmar algum ponto (documento, valor ou número de parcelas). Ainda não emitir."},
  {key:"NAO COBRAR AINDA", nome:"Não cobrar ainda", cls:"f-nao", cor:"#e5554a",
-  desc:"O êxito ainda não aconteceu: falta a decisão, o alvará, o precatório ou a escritura. Algumas ainda dependem de confirmação com o Dr. Kim."},
+  desc:"O êxito ainda não aconteceu: depende de um evento futuro (decisão, alvará, precatório, escritura ou crédito ainda não recebido). O Dr. Kim orientou aguardar. Não cobrar agora."},
  {key:"AGUARDAR", nome:"Aguardar", cls:"f-aguardar", cor:"#F9A825",
-  desc:"Aguardar conforme orientação da diretoria / evento futuro."},
+  desc:"Receita correta, mas em curso (ex.: êxito parcelado que o cliente ainda não terminou de pagar). Acompanhar, sem cobrança imediata."},
  {key:"ACAO JUDICIAL", nome:"Em ação judicial", cls:"f-judicial", cor:"#6391d2",
-  desc:"Em cobrança judicial; acompanhar o andamento do processo."},
+  desc:"Virou cobrança judicial. Acompanhar o andamento do processo."},
  {key:"EXCLUIR", nome:"Excluir / Cancelar", cls:"f-excluir", cor:"#8a8f9e",
-  desc:"Canceladas no sistema (duplicadas ou indevidas)."},
+  desc:"Não é receita a cobrar: ID cancelado no sistema (duplicado ou indevido, ex.: cliente não fechou contrato). Sai da cobrança."},
 ];
 const FAROL_LBL=Object.fromEntries(CATS.map(c=>[c.key,c.nome]));
 const FAROL_CLS=Object.fromEntries(CATS.map(c=>[c.key,c.cls]));
+const FAROL_DESC=Object.fromEntries(CATS.map(c=>[c.key,c.desc]));
 
 if(window.BASE_INFO){document.getElementById('lead').innerHTML='Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b> · fonte: EasyJur · atualizado em '+BASE_INFO.geradoEm+'.';}
 
@@ -324,7 +325,7 @@ function renderCat(){
       <div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
-      <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
+      <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}" title="${esc(FAROL_DESC[r.farol]||'')}" style="cursor:help">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
       <div class="fld full"><div class="k">Próximo passo (resolução Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.proximo_passo)}</div></div>
       <div class="fld"><div class="k">Processo / autos</div><div class="vv"${/não encontrado/i.test(r.processo)?' style="color:#ff9088"':''}>${esc(r.processo)}</div></div>
       <div class="fld"><div class="k">Contrato vinculado</div><div class="vv">${esc(r.contrato_vinculado)}</div></div>
@@ -337,7 +338,7 @@ function renderCat(){
         <td><div class="det-cli">${r.cliente}</div><div class="det-sub">${r.tipo} · ${r.via}</div></td>
         <td class="num">${valTxt}</td>
         <td class="mini">${esc(r.status_sistema)}</td>
-        <td><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></td>
+        <td><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}" title="${esc(FAROL_DESC[r.farol]||'')}" style="cursor:help">${FAROL_LBL[r.farol]||r.farol}</span></td>
       </tr>
       <tr class="detrow hidden" data-det="${i}"><td colspan="5">${card}</td></tr>`;
   }).join('')||'<tr><td colspan="5" class="empty">Nenhuma receita encontrada.</td></tr>';
