@@ -206,7 +206,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261013e"></script>
+<script src="dados.js?v=20261013f"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -230,6 +230,7 @@ const CATS=[
 ];
 const FAROL_LBL=Object.fromEntries(CATS.map(c=>[c.key,c.nome]));
 const FAROL_CLS=Object.fromEntries(CATS.map(c=>[c.key,c.cls]));
+const esc=s=>(s||'').replace(/</g,'&lt;');
 
 if(window.BASE_INFO){document.getElementById('lead').innerHTML='Todas as receitas em aberto (êxitos, sucumbências, honorários, assessoria mensal e reembolsos). Base: receitas vencidas até <b>22/09/2026</b> · fonte: EasyJur · atualizado em '+BASE_INFO.geradoEm+'.';}
 
@@ -282,12 +283,31 @@ function showTop(){
   document.getElementById('view-cat').classList.add('hidden');
   document.getElementById('view-top').classList.remove('hidden');
   const m={};
-  DADOS.forEach(r=>{const k=r.cliente||'(sem nome)';if(!m[k])m[k]={q:0,v:0};m[k].q++;m[k].v+=r.valor;});
-  const arr=Object.keys(m).map(k=>({nome:k,q:m[k].q,v:m[k].v})).sort((a,b)=>b.v-a.v);
+  DADOS.forEach(r=>{const k=r.cliente||'(sem nome)';if(!m[k])m[k]={q:0,v:0,itens:[]};m[k].q++;m[k].v+=r.valor;m[k].itens.push(r);});
+  const arr=Object.keys(m).map(k=>({nome:k,q:m[k].q,v:m[k].v,itens:m[k].itens})).sort((a,b)=>b.v-a.v);
   const totV=arr.reduce((s,x)=>s+x.v,0);
-  let h='';arr.forEach((x,i)=>{h+=`<tr><td class="num" style="color:#9aa0bd">${i+1}</td><td><b style="color:#fff">${x.nome}</b></td><td class="num">${x.q}</td><td class="num">R$ ${brl(x.v)}</td></tr>`;});
+  let h='';
+  arr.forEach((x,i)=>{
+    // linha do cliente (clicavel)
+    h+=`<tr class="rowline" data-top="${i}"><td class="num" style="color:#9aa0bd">${i+1}</td><td><span class="chev">▶</span><b style="color:#fff">${x.nome}</b></td><td class="num">${x.q}</td><td class="num">R$ ${brl(x.v)}</td></tr>`;
+    // linha de detalhe (receitas do cliente)
+    const its=x.itens.slice().sort((a,b)=>b.valor-a.valor);
+    let det=`<table class="subt" style="width:100%;border-collapse:collapse;margin:2px 0 8px"><thead><tr style="color:#9aa0bd;font-size:.74rem;text-align:left">`
+      +`<th style="padding:4px 8px">ID</th><th style="padding:4px 8px">Tipo / Via</th><th class="num" style="padding:4px 8px">Valor</th><th style="padding:4px 8px">Vencimento</th><th style="padding:4px 8px">Situação</th></tr></thead><tbody>`;
+    its.forEach(r=>{
+      const valTxt=isDef(r)?'<span class="adefinir">a definir</span>':'R$ '+brl(r.valor);
+      det+=`<tr style="font-size:.8rem"><td class="mini" style="padding:4px 8px">${r.id}</td>`
+        +`<td style="padding:4px 8px;color:#c7cbe0">${esc(r.tipo)} · ${esc(r.via)}</td>`
+        +`<td class="num" style="padding:4px 8px">${valTxt}</td>`
+        +`<td style="padding:4px 8px;color:#9aa0bd">${esc(r.vencimento)||'(s/ data)'}</td>`
+        +`<td style="padding:4px 8px"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></td></tr>`;
+    });
+    det+=`</tbody></table>`;
+    h+=`<tr class="detrow hidden"><td colspan="4">${det}</td></tr>`;
+  });
   h+=`<tr class="tot"><td></td><td>Total (${arr.length} clientes)</td><td class="num">${DADOS.length}</td><td class="num">R$ ${brl(totV)}</td></tr>`;
-  document.querySelector('#tblTop tbody').innerHTML=h;
+  const tb=document.querySelector('#tblTop tbody');tb.innerHTML=h;
+  tb.querySelectorAll('tr.rowline').forEach(tr=>tr.onclick=()=>{tr.classList.toggle('open');const d=tr.nextElementSibling;if(d&&d.classList.contains('detrow'))d.classList.toggle('hidden');});
 }
 document.getElementById('btnVoltarTop').onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));const g=document.querySelector('#nav a[data-view="geral"]');if(g)g.classList.add('on');showGeral();};
 // popula os seletores de filtro de coluna a partir dos itens atuais
@@ -342,7 +362,6 @@ function renderCat(){
   if(fTi)itens=itens.filter(r=>r.tipo===fTi);
   if(fVi)itens=itens.filter(r=>r.via===fVi);
   if(fSe)itens=itens.filter(r=>r.setor===fSe);
-  const esc=s=>(s||'').replace(/</g,'&lt;');
   document.querySelector('#tblCat tbody').innerHTML=itens.map((r,i)=>{
     const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
     const irm=Array.isArray(r.parcela_irmaos)?r.parcela_irmaos:[];
