@@ -143,18 +143,18 @@ select.colf:focus{outline:none;border-color:var(--gold)}
     <div class="view" id="view-geral">
       <h1>Receitas <em>em Aberto</em></h1>
       <div class="rule"></div>
-      <div class="lead" id="lead">Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b>.</div>
+      <div class="lead" id="lead">Todas as receitas em aberto (êxitos, sucumbências, honorários, assessoria mensal e reembolsos). Base: receitas vencidas até <b>22/09/2026</b>.</div>
       <div class="kpis" id="kpis"></div>
       <div class="aviso">Os valores exibidos são os que constam no sistema. <b>Apurar os valores atualizados e reais no ato da cobrança.</b></div>
       <div class="grid2">
         <section>
           <h2><span class="ico">◆</span>Por tipo</h2>
-          <div class="secsub">Êxito (1.1.01) e Sucumbência (1.1.06).</div>
+          <div class="secsub">Tipo de receita conforme o plano de contas: Êxito, Sucumbência, Honorários Diversos, Partido Mensal (assessoria), Reembolso e outros.</div>
           <table id="tblTipo"><thead><tr><th>Tipo</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
         </section>
         <section>
           <h2><span class="ico">◆</span>Por via</h2>
-          <div class="secsub">Judicial (com processo) ou extrajudicial (acordo, permuta, objeto de contrato).</div>
+          <div class="secsub">Natureza da cobrança: Judicial, Extrajudicial, Assessoria mensal, Honorários contratuais ou Reembolso.</div>
           <table id="tblVia"><thead><tr><th>Via</th><th class="num">Qtde</th><th class="num">Valor (R$)</th></tr></thead><tbody></tbody></table>
         </section>
       </div>
@@ -195,7 +195,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261013c"></script>
+<script src="dados.js?v=20261013d"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -220,7 +220,7 @@ const CATS=[
 const FAROL_LBL=Object.fromEntries(CATS.map(c=>[c.key,c.nome]));
 const FAROL_CLS=Object.fromEntries(CATS.map(c=>[c.key,c.cls]));
 
-if(window.BASE_INFO){document.getElementById('lead').innerHTML='Êxitos e sucumbências a receber. Base: receitas vencidas até <b>22/09/2026</b> · fonte: EasyJur · atualizado em '+BASE_INFO.geradoEm+'.';}
+if(window.BASE_INFO){document.getElementById('lead').innerHTML='Todas as receitas em aberto (êxitos, sucumbências, honorários, assessoria mensal e reembolsos). Base: receitas vencidas até <b>22/09/2026</b> · fonte: EasyJur · atualizado em '+BASE_INFO.geradoEm+'.';}
 
 // ---- KPIs (home) ----
 const totReal=DADOS.filter(r=>!isDef(r)).reduce((s,r)=>s+r.valor,0);
