@@ -191,11 +191,22 @@ select.colf:focus{outline:none;border-color:var(--gold)}
       </section>
     </div>
 
+    <div class="view hidden" id="view-top">
+      <section>
+        <h2><span class="ico">◆</span>Top inadimplentes por cliente</h2>
+        <div class="secsub">Ranking por valor total em aberto de cada cliente (soma de todas as receitas da base, maior para menor). Clique em "Voltar" para a visão geral.</div>
+        <button class="voltar" id="btnVoltarTop" style="margin:10px 0">← Voltar à visão geral</button>
+        <table id="tblTop"><thead><tr>
+          <th class="num">#</th><th>Cliente</th><th class="num">Receitas</th><th class="num">Total devido (R$)</th>
+        </tr></thead><tbody></tbody></table>
+      </section>
+    </div>
+
     <footer id="rodape"></footer>
   </main>
 </div>
 
-<script src="dados.js?v=20261013d"></script>
+<script src="dados.js?v=20261013e"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -251,18 +262,34 @@ tabelaSimples('via','#tblVia tbody');
 
 // ---- menu lateral ----
 let navHtml=`<a data-view="geral" class="on"><span>Visão geral</span><span class="n">${DADOS.length}</span></a>`;
+navHtml+=`<a data-view="top"><span style="display:flex;align-items:center;gap:9px"><span class="dot" style="background:#CFA36E"></span>Top inadimplentes</span><span class="n">↓</span></a>`;
 navHtml+=`<div class="cat">Por situação</div>`;
 CATS.forEach(c=>{const it=porFarol(c.key);if(!it.length)return;
   navHtml+=`<a data-view="cat" data-cat="${c.key}"><span style="display:flex;align-items:center;gap:9px"><span class="dot" style="background:${c.cor}"></span>${c.nome}</span><span class="n">${it.length}</span></a>`;});
 document.getElementById('nav').innerHTML=navHtml;
 document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>{
   document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on');
-  if(a.dataset.view==='geral'){showGeral();}else{showCat(a.dataset.cat);}
+  if(a.dataset.view==='geral'){showGeral();}else if(a.dataset.view==='top'){showTop();}else{showCat(a.dataset.cat);}
   window.scrollTo(0,0);
 });
 
-function showGeral(){document.getElementById('view-geral').classList.remove('hidden');document.getElementById('view-cat').classList.add('hidden');window.scrollTo(0,0);}
+function showGeral(){document.getElementById('view-geral').classList.remove('hidden');document.getElementById('view-cat').classList.add('hidden');document.getElementById('view-top').classList.add('hidden');window.scrollTo(0,0);}
 document.getElementById('btnVoltar').onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));const g=document.querySelector('#nav a[data-view="geral"]');if(g)g.classList.add('on');showGeral();};
+
+// ---- TOP INADIMPLENTES (por nome, valor total devido) ----
+function showTop(){
+  document.getElementById('view-geral').classList.add('hidden');
+  document.getElementById('view-cat').classList.add('hidden');
+  document.getElementById('view-top').classList.remove('hidden');
+  const m={};
+  DADOS.forEach(r=>{const k=r.cliente||'(sem nome)';if(!m[k])m[k]={q:0,v:0};m[k].q++;m[k].v+=r.valor;});
+  const arr=Object.keys(m).map(k=>({nome:k,q:m[k].q,v:m[k].v})).sort((a,b)=>b.v-a.v);
+  const totV=arr.reduce((s,x)=>s+x.v,0);
+  let h='';arr.forEach((x,i)=>{h+=`<tr><td class="num" style="color:#9aa0bd">${i+1}</td><td><b style="color:#fff">${x.nome}</b></td><td class="num">${x.q}</td><td class="num">R$ ${brl(x.v)}</td></tr>`;});
+  h+=`<tr class="tot"><td></td><td>Total (${arr.length} clientes)</td><td class="num">${DADOS.length}</td><td class="num">R$ ${brl(totV)}</td></tr>`;
+  document.querySelector('#tblTop tbody').innerHTML=h;
+}
+document.getElementById('btnVoltarTop').onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));const g=document.querySelector('#nav a[data-view="geral"]');if(g)g.classList.add('on');showGeral();};
 // popula os seletores de filtro de coluna a partir dos itens atuais
 function popularFiltros(itens){
   const uniq=(campo)=>[...new Set(itens.map(r=>r[campo]).filter(Boolean))].sort();
@@ -326,6 +353,7 @@ function renderCat(){
       <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}</div></div>
       <div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
+      <div class="fld"><div class="k">Vencimento</div><div class="vv">${esc(r.vencimento)||'(não informado)'}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
       <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
       <div class="fld full"><div class="k">Próximo passo (resolução Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.proximo_passo)}</div></div>
