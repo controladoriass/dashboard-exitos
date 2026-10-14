@@ -185,6 +185,15 @@ select.colf:focus{outline:none;border-color:var(--gold)}
           <div class="filtro"><label>Via</label><select class="colf" id="fVia"><option value="">Todas</option></select></div>
           <div class="filtro"><label>Setor</label><select class="colf" id="fSetor"><option value="">Todos</option></select></div>
           <div class="filtro"><label>Cliente</label><select class="colf" id="fCliente"><option value="">Todos</option></select></div>
+          <div class="filtro"><label>Ordenar por</label><select class="colf" id="fOrdem">
+            <option value="venc_asc">Vencimento (mais antigo)</option>
+            <option value="venc_desc">Vencimento (mais recente)</option>
+            <option value="cli_asc">Cliente (A a Z)</option>
+            <option value="cli_desc">Cliente (Z a A)</option>
+            <option value="val_desc">Valor (maior)</option>
+            <option value="val_asc">Valor (menor)</option>
+          </select></div>
+          <div class="filtro" style="justify-content:flex-end"><label>&nbsp;</label><button id="btnExport" style="background:var(--gold);color:var(--navy-deep);border:none;padding:8px 16px;border-radius:9px;font-weight:700;font-size:.82rem;cursor:pointer">⬇ Exportar Excel</button></div>
         </div>
         <table id="tblCat"><thead><tr>
           <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status</th><th>Situação</th>
@@ -207,7 +216,8 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261014m"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="dados.js?v=20261014n"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -323,7 +333,7 @@ function popularFiltros(itens){
   // Cliente: lista TODOS os clientes das 939 (filtro vale pro dashboard inteiro)
   set('fCliente',[...new Set(DADOS.map(r=>r.cliente))].sort((a,b)=>a.localeCompare(b,'pt')));
 }
-['fStatus','fFarol','fTipo','fVia','fSetor','fCliente'].forEach(id=>document.getElementById(id).onchange=renderCat);
+['fStatus','fFarol','fTipo','fVia','fSetor','fCliente','fOrdem'].forEach(id=>document.getElementById(id).onchange=renderCat);
 let catAtual=null;      // farol atual
 let filtroTipo=null;    // {campo:'tipo'|'via', valor:'...'}
 function showCat(key){
@@ -362,13 +372,26 @@ function renderCat(){
   const base=(fCl?DADOS.slice():getItens().slice());
   popularFiltros(base);
   const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value, fSe=document.getElementById('fSetor').value;
-  let itens=base.sort((a,b)=>b.valor-a.valor);
+  let itens=base.slice();
   if(fCl)itens=itens.filter(r=>r.cliente===fCl);
   if(fSt)itens=itens.filter(r=>r.status_sistema===fSt);
   if(fFa)itens=itens.filter(r=>(FAROL_LBL[r.farol]||r.farol)===fFa);
   if(fTi)itens=itens.filter(r=>r.tipo===fTi);
   if(fVi)itens=itens.filter(r=>r.via===fVi);
   if(fSe)itens=itens.filter(r=>r.setor===fSe);
+  // ordenacao escolhida
+  const ord=(document.getElementById('fOrdem')||{}).value||'venc_asc';
+  const dv=s=>{const m=/(\d{2})\/(\d{2})\/(\d{4})/.exec(s||'');return m?new Date(+m[3],+m[2]-1,+m[1]).getTime():(ord==='venc_asc'?Infinity:-Infinity);};
+  const cmp={
+    venc_asc:(a,b)=>dv(a.vencimento)-dv(b.vencimento),
+    venc_desc:(a,b)=>dv(b.vencimento)-dv(a.vencimento),
+    cli_asc:(a,b)=>(a.cliente||'').localeCompare(b.cliente||'','pt'),
+    cli_desc:(a,b)=>(b.cliente||'').localeCompare(a.cliente||'','pt'),
+    val_desc:(a,b)=>b.valor-a.valor,
+    val_asc:(a,b)=>a.valor-b.valor,
+  }[ord]||((a,b)=>dv(a.vencimento)-dv(b.vencimento));
+  itens.sort(cmp);
+  window._itensFiltrados=itens;  // guarda pro botao exportar
   document.querySelector('#tblCat tbody').innerHTML=itens.map((r,i)=>{
     const valTxt=isDef(r)?`<span class="adefinir" title="Valor a apurar na cobrança">a definir</span>`:`R$ ${brl(r.valor)}`;
     const irm=Array.isArray(r.parcela_irmaos)?r.parcela_irmaos:[];
@@ -412,6 +435,32 @@ function renderCat(){
     det.classList.toggle('hidden'); row.classList.toggle('open');
   });
 }
+
+// ---- EXPORTAR EXCEL (do que esta filtrado) ----
+function exportarExcel(){
+  const itens=(window._itensFiltrados&&window._itensFiltrados.length)?window._itensFiltrados:getItens();
+  if(!itens||!itens.length){alert('Nenhuma receita na lista para exportar.');return;}
+  const COLS=['ID','Cliente','Tipo','Via','Setor / Área','Valor (R$)','Vencimento','Status','Cobrança emitida','Situação','Próximo passo','Processo / autos','Contrato vinculado','Parcela','Descrição / objeto'];
+  const linhas=itens.map(r=>({
+    'ID':r.id,'Cliente':r.cliente,'Tipo':r.tipo,'Via':r.via,'Setor / Área':r.setor,
+    'Valor (R$)':isDef(r)?'a definir':r.valor,'Vencimento':r.vencimento||'',
+    'Status':r.status_sistema,'Cobrança emitida':r.cobranca_emitida||'',
+    'Situação':FAROL_LBL[r.farol]||r.farol,'Próximo passo':r.proximo_passo||'',
+    'Processo / autos':r.processo||'','Contrato vinculado':r.contrato_vinculado||'',
+    'Parcela':r.parcela||'','Descrição / objeto':r.situacao_atual||''
+  }));
+  // linha de total
+  const soma=itens.reduce((s,r)=>s+(isDef(r)?0:r.valor),0);
+  linhas.push({'ID':'','Cliente':`TOTAL (${itens.length} receitas)`,'Tipo':'','Via':'','Setor / Área':'','Valor (R$)':soma,'Vencimento':'','Status':'','Cobrança emitida':'','Situação':'','Próximo passo':'','Processo / autos':'','Contrato vinculado':'','Parcela':'','Descrição / objeto':''});
+  const ws=XLSX.utils.json_to_sheet(linhas,{header:COLS});
+  // larguras
+  ws['!cols']=[{wch:9},{wch:32},{wch:14},{wch:18},{wch:22},{wch:14},{wch:12},{wch:12},{wch:20},{wch:20},{wch:50},{wch:26},{wch:26},{wch:16},{wch:60}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Receitas');
+  const hoje=new Date().toISOString().slice(0,10).split('-').reverse().join('-');
+  XLSX.writeFile(wb,`receitas_filtradas_${hoje}.xlsx`);
+}
+document.getElementById('btnExport').onclick=exportarExcel;
 
 </script>
 </body>
