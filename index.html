@@ -217,7 +217,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261014o"></script>
+<script src="dados.js?v=20261014p"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -321,17 +321,27 @@ function showTop(){
   tb.querySelectorAll('tr.rowline').forEach(tr=>tr.onclick=()=>{tr.classList.toggle('open');const d=tr.nextElementSibling;if(d&&d.classList.contains('detrow'))d.classList.toggle('hidden');});
 }
 document.getElementById('btnVoltarTop').onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));const g=document.querySelector('#nav a[data-view="geral"]');if(g)g.classList.add('on');showGeral();};
-// popula os seletores de filtro de coluna a partir dos itens atuais
-function popularFiltros(itens){
-  const uniq=(campo)=>[...new Set(itens.map(r=>r[campo]).filter(Boolean))].sort();
-  const set=(selId,vals,atual)=>{const s=document.getElementById(selId);const keep=s.value;s.innerHTML=`<option value="">${s.id==='fFarol'||s.id==='fVia'?'todas':'todos'}</option>`+vals.map(v=>`<option value="${v.replace(/"/g,'&quot;')}">${v}</option>`).join('');if(vals.includes(keep))s.value=keep;};
-  set('fStatus',uniq('status_sistema'));
-  set('fFarol',[...new Set(itens.map(r=>FAROL_LBL[r.farol]||r.farol))].sort());
-  set('fTipo',uniq('tipo'));
-  set('fVia',uniq('via'));
-  set('fSetor',uniq('setor'));
-  // Cliente: lista TODOS os clientes das 939 (filtro vale pro dashboard inteiro)
-  set('fCliente',[...new Set(DADOS.map(r=>r.cliente))].sort((a,b)=>a.localeCompare(b,'pt')));
+// popula os seletores em CASCATA: cada filtro mostra so os valores possiveis
+// considerando os OUTROS filtros ja selecionados (dentro da base aberta).
+function popularFiltros(base){
+  const fv={status:document.getElementById('fStatus').value,farol:document.getElementById('fFarol').value,tipo:document.getElementById('fTipo').value,via:document.getElementById('fVia').value,setor:document.getElementById('fSetor').value,cliente:document.getElementById('fCliente').value};
+  // aplica todos os filtros MENOS o 'exceto'
+  const aplica=(exceto)=>base.filter(r=>
+    (exceto==='status'||!fv.status||r.status_sistema===fv.status)&&
+    (exceto==='farol'||!fv.farol||(FAROL_LBL[r.farol]||r.farol)===fv.farol)&&
+    (exceto==='tipo'||!fv.tipo||r.tipo===fv.tipo)&&
+    (exceto==='via'||!fv.via||r.via===fv.via)&&
+    (exceto==='setor'||!fv.setor||r.setor===fv.setor)&&
+    (exceto==='cliente'||!fv.cliente||r.cliente===fv.cliente)
+  );
+  const set=(selId,vals)=>{const s=document.getElementById(selId);const keep=s.value;s.innerHTML=`<option value="">${s.id==='fFarol'||s.id==='fVia'?'todas':'todos'}</option>`+vals.map(v=>`<option value="${v.replace(/"/g,'&quot;')}">${v}</option>`).join('');s.value=vals.includes(keep)?keep:'';};
+  const u=(arr,campo)=>[...new Set(arr.map(r=>r[campo]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt'));
+  set('fStatus',u(aplica('status'),'status_sistema'));
+  set('fFarol',[...new Set(aplica('farol').map(r=>FAROL_LBL[r.farol]||r.farol))].sort());
+  set('fTipo',u(aplica('tipo'),'tipo'));
+  set('fVia',u(aplica('via'),'via'));
+  set('fSetor',u(aplica('setor'),'setor'));
+  set('fCliente',u(aplica('cliente'),'cliente'));
 }
 ['fStatus','fFarol','fTipo','fVia','fSetor','fCliente','fOrdem'].forEach(id=>document.getElementById(id).onchange=renderCat);
 let catAtual=null;      // farol atual
@@ -366,11 +376,10 @@ function showFiltro(campo,valor){
 }
 let getItens=()=>[];
 function renderCat(){
-  const fCl=document.getElementById('fCliente').value;
-  // Se escolher um cliente, o filtro vale pro dashboard INTEIRO (todas as 939);
-  // senao, usa os itens da categoria/situacao aberta.
-  const base=(fCl?DADOS.slice():getItens().slice());
+  // base = sempre a categoria/situacao aberta (os filtros atuam DENTRO dela, em cascata)
+  const base=getItens().slice();
   popularFiltros(base);
+  const fCl=document.getElementById('fCliente').value;
   const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value, fSe=document.getElementById('fSetor').value;
   let itens=base.slice();
   if(fCl)itens=itens.filter(r=>r.cliente===fCl);
