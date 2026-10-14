@@ -217,7 +217,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261014p"></script>
+<script src="dados.js?v=20261014q"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -450,6 +450,40 @@ function renderCat(){
 function exportarExcel(){
   const itens=(window._itensFiltrados&&window._itensFiltrados.length)?window._itensFiltrados:getItens();
   if(!itens||!itens.length){alert('Nenhuma receita na lista para exportar.');return;}
+  const money=v=>(typeof v==='number')?v:0;
+  const brlN=v=>v; // valor numerico puro pras somas
+  const somaTot=itens.reduce((s,r)=>s+(isDef(r)?0:r.valor),0);
+  const nDef=itens.filter(isDef).length;
+  // helper de agregacao {chave:{q,v}}
+  const agg=(keyFn)=>{const m={};itens.forEach(r=>{const k=keyFn(r)||'(sem)';if(!m[k])m[k]={q:0,v:0};m[k].q++;m[k].v+=(isDef(r)?0:r.valor);});return Object.keys(m).map(k=>[k,m[k].q,m[k].v]).sort((a,b)=>b[2]-a[2]);};
+  // descreve o recorte filtrado
+  const fv=id=>{const e=document.getElementById(id);return e?e.value:'';};
+  const recorte=[['Cliente',fv('fCliente')],['Situação',fv('fFarol')],['Tipo',fv('fTipo')],['Via',fv('fVia')],['Setor',fv('fSetor')],['Status',fv('fStatus')]].filter(x=>x[1]).map(x=>`${x[0]}: ${x[1]}`).join(' | ')||'Todos (sem filtro)';
+  const hojeTxt=new Date().toLocaleDateString('pt-BR');
+
+  // ===== ABA RESUMO (executivo) =====
+  const R=[];
+  R.push(['RELATÓRIO DE RECEITAS · Silva & Silva Advogados']);
+  R.push(['Gerado em '+hojeTxt+'  ·  base: receitas vencidas até 22/09/2026 (EasyJur)']);
+  R.push(['Filtro aplicado: '+recorte]);
+  R.push([]);
+  R.push(['TOTAIS DO RECORTE']);
+  R.push(['Quantidade de receitas', itens.length]);
+  R.push(['Valor total (R$)', somaTot]);
+  R.push(['Ticket médio (R$)', itens.length?somaTot/itens.length:0]);
+  if(nDef)R.push(['Receitas com valor a apurar', nDef]);
+  R.push([]);
+  const bloco=(titulo,rows)=>{R.push([titulo,'Qtde','Valor (R$)']);rows.forEach(x=>R.push([x[0],x[1],x[2]]));R.push([]);};
+  bloco('POR SITUAÇÃO', agg(r=>FAROL_LBL[r.farol]||r.farol));
+  bloco('POR TIPO', agg(r=>r.tipo));
+  bloco('POR VIA', agg(r=>r.via));
+  // top 10 clientes
+  const tc=agg(r=>r.cliente).slice(0,10);
+  bloco('TOP 10 CLIENTES (por valor)', tc);
+  const wsR=XLSX.utils.aoa_to_sheet(R);
+  wsR['!cols']=[{wch:42},{wch:12},{wch:18}];
+
+  // ===== ABA RECEITAS (detalhada) =====
   const COLS=['ID','Cliente','Tipo','Via','Setor / Área','Valor (R$)','Vencimento','Status','Cobrança emitida','Situação','Próximo passo','Processo / autos','Contrato vinculado','Parcela','Descrição / objeto'];
   const linhas=itens.map(r=>({
     'ID':r.id,'Cliente':r.cliente,'Tipo':r.tipo,'Via':r.via,'Setor / Área':r.setor,
@@ -459,16 +493,16 @@ function exportarExcel(){
     'Processo / autos':r.processo||'','Contrato vinculado':r.contrato_vinculado||'',
     'Parcela':r.parcela||'','Descrição / objeto':r.situacao_atual||''
   }));
-  // linha de total
-  const soma=itens.reduce((s,r)=>s+(isDef(r)?0:r.valor),0);
-  linhas.push({'ID':'','Cliente':`TOTAL (${itens.length} receitas)`,'Tipo':'','Via':'','Setor / Área':'','Valor (R$)':soma,'Vencimento':'','Status':'','Cobrança emitida':'','Situação':'','Próximo passo':'','Processo / autos':'','Contrato vinculado':'','Parcela':'','Descrição / objeto':''});
-  const ws=XLSX.utils.json_to_sheet(linhas,{header:COLS});
-  // larguras
-  ws['!cols']=[{wch:9},{wch:32},{wch:14},{wch:18},{wch:22},{wch:14},{wch:12},{wch:12},{wch:20},{wch:20},{wch:50},{wch:26},{wch:26},{wch:16},{wch:60}];
+  linhas.push({'ID':'','Cliente':`TOTAL (${itens.length} receitas)`,'Valor (R$)':somaTot});
+  const wsD=XLSX.utils.json_to_sheet(linhas,{header:COLS});
+  wsD['!cols']=[{wch:9},{wch:32},{wch:16},{wch:20},{wch:22},{wch:14},{wch:12},{wch:12},{wch:20},{wch:22},{wch:50},{wch:26},{wch:26},{wch:16},{wch:60}];
+  wsD['!autofilter']={ref:`A1:O1`};
+
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Receitas');
+  XLSX.utils.book_append_sheet(wb,wsR,'Resumo');
+  XLSX.utils.book_append_sheet(wb,wsD,'Receitas');
   const hoje=new Date().toISOString().slice(0,10).split('-').reverse().join('-');
-  XLSX.writeFile(wb,`receitas_filtradas_${hoje}.xlsx`);
+  XLSX.writeFile(wb,`relatorio_receitas_${hoje}.xlsx`);
 }
 document.getElementById('btnExport').onclick=exportarExcel;
 
