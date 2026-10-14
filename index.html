@@ -196,7 +196,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
           <div class="filtro" style="justify-content:flex-end"><label>&nbsp;</label><button id="btnExport" style="background:var(--gold);color:var(--navy-deep);border:none;padding:8px 16px;border-radius:9px;font-weight:700;font-size:.82rem;cursor:pointer">⬇ Exportar Excel</button></div>
         </div>
         <table id="tblCat"><thead><tr>
-          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status</th><th>Situação</th>
+          <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Vencimento</th><th>Status</th><th>Situação</th>
         </tr></thead><tbody></tbody><tfoot></tfoot></table>
       </section>
     </div>
@@ -217,7 +217,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261014n"></script>
+<script src="dados.js?v=20261014o"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -417,17 +417,18 @@ function renderCat(){
         <td class="mini"><span class="chev">▶</span>${r.id}</td>
         <td><div class="det-cli">${r.cliente}</div><div class="det-sub">${r.tipo} · ${r.via}</div></td>
         <td class="num">${valTxt}</td>
+        <td class="mini">${esc(r.vencimento)||'(s/ data)'}</td>
         <td class="mini">${esc(r.status_sistema)}</td>
         <td><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></td>
       </tr>
-      <tr class="detrow hidden" data-det="${i}"><td colspan="5">${card}</td></tr>`;
-  }).join('')||'<tr><td colspan="5" class="empty">Nenhuma receita encontrada.</td></tr>';
+      <tr class="detrow hidden" data-det="${i}"><td colspan="6">${card}</td></tr>`;
+  }).join('')||'<tr><td colspan="6" class="empty">Nenhuma receita encontrada.</td></tr>';
   // rodape de total (soma do que esta filtrado no momento)
   const somaF=itens.reduce((s,r)=>s+(isDef(r)?0:r.valor),0);
   const nDefF=itens.filter(isDef).length;
   const tfoot=document.querySelector('#tblCat tfoot');
   if(tfoot){
-    tfoot.innerHTML=itens.length?`<tr class="tot"><td class="mini">Total</td><td>${itens.length} receita(s)${nDefF?` · ${nDefF} a apurar`:''}</td><td class="num">R$ ${brl(somaF)}</td><td colspan="2"></td></tr>`:'';
+    tfoot.innerHTML=itens.length?`<tr class="tot"><td class="mini">Total</td><td>${itens.length} receita(s)${nDefF?` · ${nDefF} a apurar`:''}</td><td class="num">R$ ${brl(somaF)}</td><td colspan="3"></td></tr>`:'';
   }
   // liga o acordeao
   document.querySelectorAll('#tblCat tr.rowline').forEach(row=>row.onclick=()=>{
