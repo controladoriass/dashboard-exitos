@@ -184,10 +184,11 @@ select.colf:focus{outline:none;border-color:var(--gold)}
           <div class="filtro"><label>Tipo</label><select class="colf" id="fTipo"><option value="">Todos</option></select></div>
           <div class="filtro"><label>Via</label><select class="colf" id="fVia"><option value="">Todas</option></select></div>
           <div class="filtro"><label>Setor</label><select class="colf" id="fSetor"><option value="">Todos</option></select></div>
+          <div class="filtro"><label>Cliente</label><select class="colf" id="fCliente"><option value="">Todos</option></select></div>
         </div>
         <table id="tblCat"><thead><tr>
           <th>ID</th><th>Cliente</th><th class="num">Valor (R$)</th><th>Status</th><th>Situação</th>
-        </tr></thead><tbody></tbody></table>
+        </tr></thead><tbody></tbody><tfoot></tfoot></table>
       </section>
     </div>
 
@@ -206,7 +207,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261014l"></script>
+<script src="dados.js?v=20261014m"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -319,8 +320,10 @@ function popularFiltros(itens){
   set('fTipo',uniq('tipo'));
   set('fVia',uniq('via'));
   set('fSetor',uniq('setor'));
+  // Cliente: lista TODOS os clientes das 939 (filtro vale pro dashboard inteiro)
+  set('fCliente',[...new Set(DADOS.map(r=>r.cliente))].sort((a,b)=>a.localeCompare(b,'pt')));
 }
-['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).onchange=renderCat);
+['fStatus','fFarol','fTipo','fVia','fSetor','fCliente'].forEach(id=>document.getElementById(id).onchange=renderCat);
 let catAtual=null;      // farol atual
 let filtroTipo=null;    // {campo:'tipo'|'via', valor:'...'}
 function showCat(key){
@@ -332,7 +335,7 @@ function showCat(key){
   document.getElementById('catTitulo').innerHTML=c.nome;
   document.getElementById('catResumo').innerHTML=`<b>${it.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent=c.desc;
-  ['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).value='');
+  ['fStatus','fFarol','fTipo','fVia','fSetor','fCliente'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>porFarol(catAtual);
   renderCat();
 }
@@ -347,16 +350,20 @@ function showFiltro(campo,valor){
   document.getElementById('catTitulo').innerHTML=valor;
   document.getElementById('catResumo').innerHTML=`<b>${itens.length} receita(s)</b> · <b>R$ ${brl(v)}</b>${d?` · <span class="adefinir">${d} com valor a apurar</span>`:''}`;
   document.getElementById('catDesc').textContent = campo==='tipo' ? 'Todas as receitas deste tipo.' : (campo==='setor' ? 'Todas as receitas deste setor.' : 'Todas as receitas desta via.');
-  ['fStatus','fFarol','fTipo','fVia','fSetor'].forEach(id=>document.getElementById(id).value='');
+  ['fStatus','fFarol','fTipo','fVia','fSetor','fCliente'].forEach(id=>document.getElementById(id).value='');
   getItens=()=>DADOS.filter(r=>r[campo]===valor);
   renderCat(); window.scrollTo(0,0);
 }
 let getItens=()=>[];
 function renderCat(){
-  const base=getItens().slice();
+  const fCl=document.getElementById('fCliente').value;
+  // Se escolher um cliente, o filtro vale pro dashboard INTEIRO (todas as 939);
+  // senao, usa os itens da categoria/situacao aberta.
+  const base=(fCl?DADOS.slice():getItens().slice());
   popularFiltros(base);
   const fSt=document.getElementById('fStatus').value, fFa=document.getElementById('fFarol').value, fTi=document.getElementById('fTipo').value, fVi=document.getElementById('fVia').value, fSe=document.getElementById('fSetor').value;
   let itens=base.sort((a,b)=>b.valor-a.valor);
+  if(fCl)itens=itens.filter(r=>r.cliente===fCl);
   if(fSt)itens=itens.filter(r=>r.status_sistema===fSt);
   if(fFa)itens=itens.filter(r=>(FAROL_LBL[r.farol]||r.farol)===fFa);
   if(fTi)itens=itens.filter(r=>r.tipo===fTi);
@@ -392,6 +399,13 @@ function renderCat(){
       </tr>
       <tr class="detrow hidden" data-det="${i}"><td colspan="5">${card}</td></tr>`;
   }).join('')||'<tr><td colspan="5" class="empty">Nenhuma receita encontrada.</td></tr>';
+  // rodape de total (soma do que esta filtrado no momento)
+  const somaF=itens.reduce((s,r)=>s+(isDef(r)?0:r.valor),0);
+  const nDefF=itens.filter(isDef).length;
+  const tfoot=document.querySelector('#tblCat tfoot');
+  if(tfoot){
+    tfoot.innerHTML=itens.length?`<tr class="tot"><td class="mini">Total</td><td>${itens.length} receita(s)${nDefF?` · ${nDefF} a apurar`:''}</td><td class="num">R$ ${brl(somaF)}</td><td colspan="2"></td></tr>`:'';
+  }
   // liga o acordeao
   document.querySelectorAll('#tblCat tr.rowline').forEach(row=>row.onclick=()=>{
     const i=row.dataset.i; const det=document.querySelector(`#tblCat tr[data-det="${i}"]`);
