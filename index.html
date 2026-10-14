@@ -206,7 +206,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261014f"></script>
+<script src="dados.js?v=20261014g"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -374,6 +374,7 @@ function renderCat(){
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Vencimento</div><div class="vv">${esc(r.vencimento)||'(não informado)'}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
+      <div class="fld"><div class="k">Cobrança emitida</div><div class="vv"${/vencido|emitida/i.test(r.cobranca_emitida||'')?' style="color:#ffcb5c"':''}>${esc(r.cobranca_emitida)||'Não informada'}</div></div>
       <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
       <div class="fld full"><div class="k">Próximo passo (resolução Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.proximo_passo)}</div></div>
       <div class="fld"><div class="k">Processo / autos</div><div class="vv"${/não encontrado/i.test(r.processo)?' style="color:#ff9088"':''}>${esc(r.processo)}</div></div>
