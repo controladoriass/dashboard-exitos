@@ -206,7 +206,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261014g"></script>
+<script src="dados.js?v=20261014h"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -370,17 +370,17 @@ function renderCat(){
     const card=`<div class="card">
       <div class="fld"><div class="k">ID</div><div class="vv">${r.id}</div></div>
       <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}</div></div>
-      ${r.tipo==='Reembolso'?'':`<div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>`}
+      ${(r.tipo==='Reembolso'||r.tipo==='Aluguéis')?'':`<div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>`}
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Vencimento</div><div class="vv">${esc(r.vencimento)||'(não informado)'}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
       <div class="fld"><div class="k">Cobrança emitida</div><div class="vv"${/vencido|emitida/i.test(r.cobranca_emitida||'')?' style="color:#ffcb5c"':''}>${esc(r.cobranca_emitida)||'Não informada'}</div></div>
       <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
       <div class="fld full"><div class="k">Próximo passo (resolução Yasmin / Dr. Kim)</div><div class="vv yk">${esc(r.proximo_passo)}</div></div>
-      <div class="fld"><div class="k">Processo / autos</div><div class="vv"${/não encontrado/i.test(r.processo)?' style="color:#ff9088"':''}>${esc(r.processo)}</div></div>
-      <div class="fld"><div class="k">Contrato vinculado</div><div class="vv">${esc(r.contrato_vinculado)}</div></div>
+      ${r.tipo==='Aluguéis'?'':`<div class="fld"><div class="k">Processo / autos</div><div class="vv"${/não encontrado/i.test(r.processo)?' style="color:#ff9088"':''}>${esc(r.processo)}</div></div>`}
+      ${r.tipo==='Aluguéis'?'':`<div class="fld"><div class="k">Contrato vinculado</div><div class="vv">${esc(r.contrato_vinculado)}</div></div>`}
       <div class="fld"><div class="k">Parcela</div><div class="vv">${parcelaTxt}</div></div>
-      ${r.tipo==='Reembolso'?'':`<div class="fld full"><div class="k">Último registro / andamento</div><div class="vv movi">${esc(r.ultima_movimentacao)||'(sem movimentação registrada)'}</div></div>`}
+      ${(r.tipo==='Reembolso'||r.tipo==='Aluguéis')?'':`<div class="fld full"><div class="k">Último registro / andamento</div><div class="vv movi">${esc(r.ultima_movimentacao)||'(sem movimentação registrada)'}</div></div>`}
       <div class="fld full"><div class="k">Descrição da receita / objeto</div><div class="vv">${esc(r.situacao_atual)}</div></div>
     </div>`;
     return `<tr class="rowline" data-i="${i}">
