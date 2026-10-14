@@ -206,7 +206,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
   </main>
 </div>
 
-<script src="dados.js?v=20261014e"></script>
+<script src="dados.js?v=20261014f"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -370,7 +370,7 @@ function renderCat(){
     const card=`<div class="card">
       <div class="fld"><div class="k">ID</div><div class="vv">${r.id}</div></div>
       <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}</div></div>
-      <div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>
+      ${r.tipo==='Reembolso'?'':`<div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>`}
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Vencimento</div><div class="vv">${esc(r.vencimento)||'(não informado)'}</div></div>
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
