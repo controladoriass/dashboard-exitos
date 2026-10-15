@@ -97,6 +97,7 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 .busca::placeholder{color:#6f7496}.busca:focus{outline:none;border-color:var(--gold)}
 .det-cli{font-weight:600;color:#fff}
 .det-sub{font-size:.73rem;color:#8e93b0;margin-top:2px}
+.he-badge{display:inline-block;padding:1px 8px;border-radius:12px;font-size:.66rem;font-weight:700;background:rgba(207,163,110,.18);color:#CFA36E;border:1px solid rgba(207,163,110,.45);white-space:nowrap;margin-left:4px;letter-spacing:.02em}
 .mini{font-size:.76rem;color:#9aa0bd}
 .empty{text-align:center;color:#6f7496;padding:28px}
 footer{font-size:.75rem;color:#7f84a3;margin-top:34px;font-weight:500;line-height:1.7}
@@ -219,7 +220,7 @@ select.colf option:checked{background:var(--gold);color:var(--navy-deep)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261015h"></script>
+<script src="dados.js?v=20261015i"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -410,7 +411,7 @@ function renderCat(){
     // linha resumida clicavel + linha de detalhe (card) escondida
     const card=`<div class="card">
       <div class="fld"><div class="k">ID</div><div class="vv">${r.id}</div></div>
-      <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}</div></div>
+      <div class="fld"><div class="k">Tipo / Via</div><div class="vv">${r.tipo} · ${r.via}${r.horas_excedidas?' <span class="he-badge">Horas excedidas</span>':''}</div></div>
       ${(r.tipo==='Reembolso'||r.tipo==='Aluguéis')?'':`<div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>`}
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Vencimento</div><div class="vv">${esc(r.vencimento)||'(não informado)'}</div></div>
@@ -426,7 +427,7 @@ function renderCat(){
     </div>`;
     return `<tr class="rowline" data-i="${i}">
         <td class="mini"><span class="chev">▶</span>${r.id}</td>
-        <td><div class="det-cli">${r.cliente}</div><div class="det-sub">${r.tipo} · ${r.via}</div></td>
+        <td><div class="det-cli">${r.cliente}</div><div class="det-sub">${r.tipo} · ${r.via}${r.horas_excedidas?' <span class="he-badge">Horas excedidas</span>':''}</div></td>
         <td class="num">${valTxt}</td>
         <td class="mini">${esc(r.vencimento)||'(s/ data)'}</td>
         <td class="mini">${esc(r.status_sistema)}</td>
