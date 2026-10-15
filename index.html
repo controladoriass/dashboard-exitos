@@ -219,7 +219,7 @@ select.colf option:checked{background:var(--gold);color:var(--navy-deep)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261015e"></script>
+<script src="dados.js?v=20261015f"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -244,8 +244,6 @@ const CATS=[
 const FAROL_LBL=Object.fromEntries(CATS.map(c=>[c.key,c.nome]));
 const FAROL_CLS=Object.fromEntries(CATS.map(c=>[c.key,c.cls]));
 const esc=s=>(s||'').replace(/</g,'&lt;');
-const MESES_EXT=['','janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-const compTxt=c=>{const m=/^(\d{2})\/(\d{4})$/.exec(c||'');return m?`${MESES_EXT[+m[1]]}/${m[2]}`:(c||'');};
 
 if(window.BASE_INFO){document.getElementById('lead').innerHTML='Todas as receitas em aberto (êxitos, sucumbências, honorários, assessoria mensal e reembolsos). Base: receitas vencidas até <b>22/09/2026</b> · fonte: EasyJur · atualizado em '+BASE_INFO.geradoEm+'.';}
 
@@ -416,7 +414,6 @@ function renderCat(){
       ${(r.tipo==='Reembolso'||r.tipo==='Aluguéis')?'':`<div class="fld"><div class="k">Setor / Área</div><div class="vv">${esc(r.setor)}</div></div>`}
       <div class="fld"><div class="k">Valor (R$)</div><div class="vv">${valTxt}</div></div>
       <div class="fld"><div class="k">Vencimento</div><div class="vv">${esc(r.vencimento)||'(não informado)'}</div></div>
-      ${r.competencia?`<div class="fld"><div class="k">Competência</div><div class="vv">${esc(compTxt(r.competencia))}</div></div>`:''}
       <div class="fld"><div class="k">Status no sistema</div><div class="vv">${esc(r.status_sistema)}</div></div>
       <div class="fld"><div class="k">Cobrança emitida</div><div class="vv"${/vencido|emitida/i.test(r.cobranca_emitida||'')?' style="color:#ffcb5c"':''}>${esc(r.cobranca_emitida)||'Não informada'}</div></div>
       <div class="fld"><div class="k">Situação</div><div class="vv"><span class="tag ${FAROL_CLS[r.farol]||'f-verificar'}">${FAROL_LBL[r.farol]||r.farol}</span></div></div>
