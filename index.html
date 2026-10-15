@@ -219,7 +219,7 @@ select.colf option:checked{background:var(--gold);color:var(--navy-deep)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261015b"></script>
+<script src="dados.js?v=20261015d"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
@@ -461,59 +461,54 @@ function gerarPDF(){
   const E=s=>(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;');
   const tbl=(titulo,rows)=>`<h3>${titulo}</h3><table class="agg"><thead><tr><th>${titulo.split(' ')[1]||'Item'}</th><th class="n">Qtde</th><th class="n">Valor (R$)</th></tr></thead><tbody>`+rows.map(x=>`<tr><td>${E(x[0])}</td><td class="n">${x[1]}</td><td class="n">R$ ${brl(x[2])}</td></tr>`).join('')+`</tbody></table>`;
 
+  // nome do cliente para o titulo (se filtrado por 1 cliente)
+  const clienteSel=fv('fCliente');
+  const titulo=clienteSel?E(clienteSel):'Clientes diversos';
+  // descricao LIMPA pro cliente (so a natureza, sem jargao/ids internos)
+  const descCliente=r=>{
+    const t=r.tipo;
+    if(t==='Partido Mensal')return 'Honorário mensal de assessoria jurídica';
+    if(t==='Reembolso')return 'Reembolso de despesa';
+    if(t==='Êxito')return 'Honorário de êxito';
+    if(t==='Sucumbência')return 'Honorário de sucumbência';
+    if(t==='Honorários Diversos')return 'Honorários';
+    if(t==='Aluguéis')return 'Aluguel';
+    return t;
+  };
   const corpoDet=itens.map(r=>`<tr>
-    <td>${r.id}</td><td>${E(r.cliente)}</td><td>${E(r.tipo)}</td>
+    <td>${r.id}</td><td>${E(descCliente(r))}</td>
     <td class="n">${isDef(r)?'a definir':'R$ '+brl(r.valor)}</td>
-    <td>${E(r.vencimento)}</td><td>${E(FAROL_LBL[r.farol]||r.farol)}</td>
-    <td>${E(r.cobranca_emitida)}</td><td>${E(r.processo)}</td></tr>`).join('');
+    <td>${E(r.vencimento)||''}</td></tr>`).join('');
 
-  const html=`<!doctype html><html><head><meta charset="utf-8"><title>Relatório de Receitas</title>
+  const html=`<!doctype html><html><head><meta charset="utf-8"><title>Demonstrativo de valores em aberto</title>
   <style>
-    @page{size:A4 landscape;margin:14mm}
+    @page{size:A4 portrait;margin:16mm}
     *{font-family:Arial,Helvetica,sans-serif;box-sizing:border-box}
     body{margin:0;color:#1E223F;font-size:11px}
-    .cap{background:#1E223F;color:#fff;padding:22px 26px;border-bottom:4px solid #CFA36E}
+    .cap{background:#1E223F;color:#fff;padding:24px 28px;border-bottom:4px solid #CFA36E}
     .cap .eye{color:#CFA36E;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
-    .cap h1{margin:4px 0 2px;font-size:22px}
+    .cap h1{margin:4px 0 2px;font-size:20px}
     .cap h1 em{color:#CFA36E;font-style:italic}
     .cap .sub{color:#c7cbe0;font-size:11px}
-    .wrap{padding:20px 26px}
-    .filtro{background:#f3f1ec;border-left:4px solid #CFA36E;padding:8px 12px;margin-bottom:16px;font-size:11px}
-    .kpis{display:flex;gap:14px;margin-bottom:18px}
-    .kpi{flex:1;border:1px solid #e2ddd3;border-radius:8px;padding:12px 14px}
-    .kpi .l{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#8a8f9e}
-    .kpi .v{font-size:18px;font-weight:700;color:#1E223F;margin-top:3px}
-    h3{color:#CFA36E;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 6px;border-bottom:1px solid #e2ddd3;padding-bottom:4px}
+    .wrap{padding:22px 28px}
+    .resumo{background:#f3f1ec;border-left:4px solid #CFA36E;padding:12px 16px;margin-bottom:18px;font-size:13px}
+    .resumo b{font-size:17px;color:#1E223F}
     table{width:100%;border-collapse:collapse;margin-bottom:8px}
-    th{background:#1E223F;color:#fff;text-align:left;padding:6px 8px;font-size:10px}
-    td{padding:5px 8px;border-bottom:1px solid #eee;font-size:10px;vertical-align:top}
+    th{background:#1E223F;color:#fff;text-align:left;padding:7px 9px;font-size:10.5px}
+    td{padding:6px 9px;border-bottom:1px solid #eee;font-size:10.5px;vertical-align:top}
     .n{text-align:right}
-    table.agg{width:60%}
-    .det th,.det td{font-size:9.5px}
     tr:nth-child(even) td{background:#faf9f6}
     .tot td{font-weight:700;background:#f3f1ec!important;border-top:2px solid #CFA36E}
-    .foot{margin-top:14px;font-size:9px;color:#8a8f9e;text-align:center}
+    .foot{margin-top:18px;font-size:9px;color:#8a8f9e;text-align:center}
   </style></head><body>
-  <div class="cap"><div class="eye">Silva &amp; Silva Advogados · Controladoria</div>
-    <h1>Relatório de <em>Receitas</em></h1>
-    <div class="sub">Gerado em ${hojeTxt} · base: receitas vencidas até 22/09/2026 (EasyJur)</div></div>
+  <div class="cap"><div class="eye">Silva &amp; Silva Advogados</div>
+    <h1>Demonstrativo de <em>valores em aberto</em></h1>
+    <div class="sub">${titulo} · ${hojeTxt}</div></div>
   <div class="wrap">
-    <div class="filtro"><b>Filtro aplicado:</b> ${E(recorte)}</div>
-    <div class="kpis">
-      <div class="kpi"><div class="l">Receitas</div><div class="v">${itens.length}</div></div>
-      <div class="kpi"><div class="l">Valor total</div><div class="v">R$ ${brl(somaTot)}</div></div>
-      <div class="kpi"><div class="l">Ticket médio</div><div class="v">R$ ${brl(itens.length?somaTot/itens.length:0)}</div></div>
-      ${nDef?`<div class="kpi"><div class="l">A apurar</div><div class="v">${nDef}</div></div>`:''}
-    </div>
-    <div style="display:flex;gap:24px;flex-wrap:wrap">
-      <div style="flex:1;min-width:280px">${tbl('POR SITUAÇÃO', agg(r=>FAROL_LBL[r.farol]||r.farol))}</div>
-      <div style="flex:1;min-width:280px">${tbl('POR TIPO', agg(r=>r.tipo))}</div>
-    </div>
-    ${tbl('TOP 10 CLIENTES', agg(r=>r.cliente).slice(0,10))}
-    <h3>RECEITAS (${itens.length})</h3>
-    <table class="det"><thead><tr><th>ID</th><th>Cliente</th><th>Tipo</th><th class="n">Valor</th><th>Vencimento</th><th>Situação</th><th>Cobrança</th><th>Processo</th></tr></thead>
-    <tbody>${corpoDet}<tr class="tot"><td></td><td>TOTAL (${itens.length} receitas)</td><td></td><td class="n">R$ ${brl(somaTot)}</td><td colspan="4"></td></tr></tbody></table>
-    <div class="foot">Relatório gerado pela Controladoria Silva &amp; Silva · dados do sistema EasyJur</div>
+    <div class="resumo">Total em aberto: <b>R$ ${brl(somaTot)}</b> &nbsp;·&nbsp; ${itens.length} lançamento(s)</div>
+    <table><thead><tr><th>ID</th><th>Descrição</th><th class="n">Valor (R$)</th><th>Vencimento</th></tr></thead>
+    <tbody>${corpoDet}<tr class="tot"><td></td><td>TOTAL (${itens.length} lançamentos)</td><td class="n">R$ ${brl(somaTot)}</td><td></td></tr></tbody></table>
+    <div class="foot">Silva &amp; Silva Advogados · documento gerado em ${hojeTxt}</div>
   </div></body></html>`;
 
   const w=window.open('','_blank');
