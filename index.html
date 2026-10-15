@@ -128,8 +128,10 @@ tr.detrow>td{padding:0;border:none}
 .filtros{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
 .filtro{display:flex;flex-direction:column;gap:4px}
 .filtro label{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
-select.colf{background:rgba(0,0,0,.25);color:#e8e9f0;border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;font-family:inherit;font-size:.82rem;font-weight:500;cursor:pointer;min-width:150px}
+select.colf{background:var(--navy);color:#e8e9f0;border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;font-family:inherit;font-size:.82rem;font-weight:500;cursor:pointer;min-width:150px}
 select.colf:focus{outline:none;border-color:var(--gold)}
+select.colf option{background:var(--navy);color:#e8e9f0}
+select.colf option:checked{background:var(--gold);color:var(--navy-deep)}
 </style>
 </head>
 <body>
@@ -217,7 +219,7 @@ select.colf:focus{outline:none;border-color:var(--gold)}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="dados.js?v=20261014r"></script>
+<script src="dados.js?v=20261015a"></script>
 <script>
 const brl=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const isDef=r=>r.a_definir;
